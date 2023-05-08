@@ -263,6 +263,8 @@ const Settings: FC<SettingsProps> = (props) => {
             endDate: lastDateString,
             billingCycle: selectedValue.label,
             integration: integrationType ? 1 : 0,
+            showEmail: false,
+            showStatus: false,
           },
         },
       })
