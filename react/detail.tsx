@@ -232,6 +232,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                 finalDate={finalDate}
                 dataTableInvoice={tableInvoices}
                 setDataTableInvoice={setTableInvoices}
+                settingsQuery={settingsQuery}
               />
             </div>
           </Tab>

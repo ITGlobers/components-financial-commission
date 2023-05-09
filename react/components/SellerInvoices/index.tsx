@@ -19,6 +19,7 @@ interface DetailProps {
   startDate?: string
   finalDate?: string
   dataTableInvoice: Invoice[]
+  settingsQuery: DocumentNode
   setDataTableInvoice: (data: Invoice[]) => void
 }
 
@@ -28,6 +29,7 @@ const SellerInvoices: FC<DetailProps> = ({
   startDate,
   finalDate,
   dataTableInvoice,
+  settingsQuery,
   setDataTableInvoice,
 }) => {
   const { query } = useRuntime()
@@ -36,6 +38,12 @@ const SellerInvoices: FC<DetailProps> = ({
   const [itemFrom, setItemFrom] = useState(1)
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
+  const [showStatus, setShowStatus] = useState(true)
+
+  const { data: settings } = useQuery(settingsQuery, {
+    ssr: false,
+    pollInterval: 0,
+  })
 
   const { data: dataInvoices } = useQuery(invoicesQuery, {
     ssr: false,
@@ -54,6 +62,12 @@ const SellerInvoices: FC<DetailProps> = ({
       },
     },
   })
+
+  useEffect(() => {
+    if (settings) {
+      setShowStatus(settings.getSettings.showStatus)
+    }
+  }, [settings])
 
   useEffect(() => {
     if (sellerName === '' && !query?.sellerName) {
@@ -144,6 +158,8 @@ const SellerInvoices: FC<DetailProps> = ({
       },
     },
   ]
+
+  !showStatus && schemaTableInvoice.splice(2, 1);
 
   const changeRows = (row: number) => {
     setPageSize(row)
