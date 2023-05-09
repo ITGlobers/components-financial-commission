@@ -79,6 +79,8 @@ const Settings: FC<SettingsProps> = (props) => {
 
   const [editTokenMutation] = useMutation(editToken)
 
+  const [toggleValue, setToggleValue] = useState(false)
+
   const { data: getToken } = useQuery(getTokenQuery, {
     ssr: false,
     pollInterval: 0,
@@ -131,7 +133,7 @@ const Settings: FC<SettingsProps> = (props) => {
         value: 30,
         label: settings.getSettings.billingCycle,
       })
-
+      // setToggleValue(settings.getSettings.showEmail)
       if (settings.getSettings.integration === 'external') setIntegration(false)
     }
   }, [settings])
@@ -211,6 +213,35 @@ const Settings: FC<SettingsProps> = (props) => {
     },
   ]
 
+  const handleToggleClick = () => {
+    // eslint-disable-next-line no-console
+    console.log('handleToggleClick executed')
+    const showEmail = !toggleValue
+    const showStatus = !toggleValue
+
+    // eslint-disable-next-line no-console
+    console.log('Valor de toggleValue:', toggleValue)
+    // eslint-disable-next-line no-console
+    console.log('Valor de showEmail:', showEmail)
+    // eslint-disable-next-line no-console
+    console.log('Valor de showStatus:', showStatus)
+
+    setToggleValue(!toggleValue)
+    createSettings({
+      variables: {
+        settingsData: {
+          showEmail,
+          showStatus,
+        },
+      },
+    })
+  }
+
+  /* useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log('Show Email:', toggleValue)
+  }, [toggleValue]) */
+
   const handleCreateSettings = (integrationType = integration) => {
     if (selectedValue) {
       const nowDate = new Date()
@@ -263,8 +294,8 @@ const Settings: FC<SettingsProps> = (props) => {
             endDate: lastDateString,
             billingCycle: selectedValue.label,
             integration: integrationType ? 1 : 0,
-            showEmail: false,
-            showStatus: false,
+            // showEmail: false,
+            // showStatus: false,
           },
         },
       })
@@ -438,16 +469,13 @@ const Settings: FC<SettingsProps> = (props) => {
                 <div className="w-20">
                   <Toggle
                     label={
-                      integration
+                      toggleValue
                         ? 'Do not use Email/Status'
                         : 'Use Email/Status'
                     }
                     semantic
-                    checked={integration}
-                    onChange={() => {
-                      setIntegration(!integration)
-                      handleCreateSettings(!integration)
-                    }}
+                    checked={toggleValue}
+                    onChange={handleToggleClick}
                   />
                 </div>
                 <div className="w-80">
