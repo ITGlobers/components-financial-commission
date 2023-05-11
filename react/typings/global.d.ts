@@ -44,10 +44,12 @@ interface ModalConfirmData {
   invoiceMutation: any
   disabled: boolean
   integration?: string
+  settingsQuery?: DocumentNode
 }
 interface MessagesData {
   confirmation: any
   warning: any
+  noEmailWarning: any
 }
 interface SellerData {
   startDate: string
@@ -227,13 +229,13 @@ interface SettingInfoType {
 }
 interface responseToken {
   getToken: {
-    autheticationToken: string,
+    autheticationToken: string
     enabled: boolean
     name: string
   }
 }
 interface TokenAuthProps {
-  activateToogle: Boolean
+  activateToogle: boolean
   sellerId: string
   editToken: DocumentNode
   createTokenMutation: DocumentNode

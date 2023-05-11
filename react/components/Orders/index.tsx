@@ -30,6 +30,7 @@ interface DetailProps {
   dataTableOrders: TableOrdersType[]
   setDataTableOrders: (data: TableOrdersType[]) => void
   validRange: boolean
+  settingsQuery: DocumentNode
 }
 
 const Orders: FC<DetailProps> = ({
@@ -47,6 +48,7 @@ const Orders: FC<DetailProps> = ({
   dataTableOrders,
   setDataTableOrders,
   validRange,
+  settingsQuery,
 }) => {
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(20)
@@ -213,33 +215,35 @@ const Orders: FC<DetailProps> = ({
 
   return (
     <PageBlock>
-      {account ? null : (
-        <ModalConfirm
-          invoiceMutation={invoiceMutation}
-          disabled={
-            !(
-              statusOrders === 'invoiced' &&
-              dataOrders?.orders.data.length &&
-              validRange
-            )
-          }
-          buttonMessage={
-            <FormattedMessage id="admin/form-settings.button-invoice" />
-          }
-          messages={{
-            warning: <FormattedMessage id="admin/modal-setting.warning" />,
-            confirmation: (
-              <FormattedMessage id="admin/modal-setting.confirmation" />
-            ),
-          }}
-          sellerData={{
-            startDate: startDate ?? '',
-            finalDate: finalDate ?? '',
-            sellerName: sellerName ?? '',
-            id: sellerId ?? '',
-          }}
-        />
-      )}
+      <ModalConfirm
+        settingsQuery={settingsQuery}
+        invoiceMutation={invoiceMutation}
+        disabled={
+          !(
+            statusOrders === 'invoiced' &&
+            dataOrders?.orders.data.length &&
+            validRange
+          )
+        }
+        buttonMessage={
+          <FormattedMessage id="admin/form-settings.button-invoice" />
+        }
+        messages={{
+          warning: <FormattedMessage id="admin/modal-setting.warning" />,
+          noEmailWarning: (
+            <FormattedMessage id="admin/modal-setting.noEmailWarning" />
+          ),
+          confirmation: (
+            <FormattedMessage id="admin/modal-setting.confirmation" />
+          ),
+        }}
+        sellerData={{
+          startDate: startDate ?? '',
+          finalDate: finalDate ?? '',
+          sellerName: sellerName ?? '',
+          id: sellerId ?? '',
+        }}
+      />
       <div className="mt2">
         <TableComponent
           schemaTable={schemaTable}

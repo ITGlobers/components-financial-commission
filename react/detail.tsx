@@ -214,6 +214,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                   dataTableOrders={tableOrders}
                   setDataTableOrders={setTableOrders}
                   validRange={defaultFinalString !== finalDate}
+                  settingsQuery={settingsQuery}
                 />
               )}
             </div>
