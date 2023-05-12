@@ -41,6 +41,7 @@
   "admin/table-seller-status": "Status",
   "admin/table-seller-invoice": "ID invoice",
   "admin/table-seller-created": "Invoice Created Date",
+  "admin/table-seller-download": "Download",
   "admin/modal-settings.billingCycle": "Global Billing cycle",
   "admin/modal-settings.billingCycle-helpText": "Each cycle will trigger the creation of an Invoice; keep in mind that if this is changed, all sellers that follow the default settings will automatically generate an Invoice and start a new cycle following the new rule.",
   "admin/modal-settings.alert-warning": "Proceed with caution. All sellers that currently don't have individual settings will be affected",
