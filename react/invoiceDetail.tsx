@@ -21,7 +21,7 @@ const InvoiceDetail: FC<InvoiceDetailProps> = (props) => {
 
   const [, setEmailSent] = useState(false)
   const [template, setTemplate] = useState('')
-  const [invoice, setInvoice] = useState<Invoice>({})
+  const [htmlString, setHtmlString] = useState('')
   const [, { data: emailData }] = useMutation(sendEmail)
 
   const { data } = useQuery(invoiceQuery, {
@@ -48,19 +48,21 @@ const InvoiceDetail: FC<InvoiceDetailProps> = (props) => {
   }, [emailData])
 
   useEffect(() => {
-    setInvoice(data?.getInvoice)
-  }, [data])
+    if (data !== undefined && template !== '') {
+      const hbTemplate = Handlebars.compile(template)
 
-  if (!template) {
+      template &&
+        setHtmlString(hbTemplate({ id, ...data?.getInvoice.jsonData }))
+    }
+  }, [data, template])
+
+  if (!template || htmlString === '') {
     return (
       <div style={{ position: 'absolute', top: '50%', left: '50%' }}>
         <Spinner />
       </div>
     )
   }
-
-  const hbTemplate = Handlebars.compile(template)
-  const htmlString = hbTemplate({ id, ...invoice })
 
   return (
     <Layout>

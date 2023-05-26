@@ -1,4 +1,5 @@
-import React, { useState, FC, useEffect } from 'react'
+import type { FC } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useMutation, useQuery } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
 import { Alert, Button, Input, ModalDialog, Spinner } from 'vtex.styleguide'

@@ -159,7 +159,7 @@ const SellerInvoices: FC<DetailProps> = ({
     },
   ]
 
-  !showStatus && schemaTableInvoice.splice(2, 1);
+  !showStatus && schemaTableInvoice.splice(2, 1)
 
   const changeRows = (row: number) => {
     setPageSize(row)

@@ -6,6 +6,7 @@ interface Invoice {
   seller?: Seller
   status?: string
   totalizers?: Totalizers
+  jsonData?: any
 }
 interface Order {
   orderId: string

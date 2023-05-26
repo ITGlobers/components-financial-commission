@@ -17,7 +17,7 @@ import {
 import { FormattedMessage } from 'react-intl'
 import { useQuery, useMutation } from 'react-apollo'
 import { useRuntime } from 'vtex.render-runtime'
-import { DocumentNode } from 'graphql'
+import type { DocumentNode } from 'graphql'
 
 import TableComponent from './components/Table'
 import PaginationComponent from './components/Table/pagination'
@@ -219,7 +219,10 @@ const Settings: FC<SettingsProps> = (props) => {
     console.log('Show Email:', toggleValue)
   }, [toggleValue]) */
 
-  const handleCreateSettings = ({showStatus = toggleValue, integrationType = integration} = {}) => {
+  const handleCreateSettings = ({
+    showStatus = toggleValue,
+    integrationType = integration,
+  } = {}) => {
     if (selectedValue) {
       const nowDate = new Date()
       let date = ''
@@ -272,7 +275,7 @@ const Settings: FC<SettingsProps> = (props) => {
             billingCycle: selectedValue.label,
             integration: integrationType ? 1 : 0,
             showEmail: showStatus,
-            showStatus: showStatus
+            showStatus,
           },
         },
       })
@@ -426,7 +429,7 @@ const Settings: FC<SettingsProps> = (props) => {
                     checked={integration}
                     onChange={() => {
                       setIntegration(!integration)
-                      handleCreateSettings({integrationType: !integration})
+                      handleCreateSettings({ integrationType: !integration })
                     }}
                   />
                 </div>
@@ -454,7 +457,7 @@ const Settings: FC<SettingsProps> = (props) => {
                     checked={toggleValue}
                     onChange={() => {
                       setToggleValue(!toggleValue)
-                      handleCreateSettings({showStatus: !toggleValue})
+                      handleCreateSettings({ showStatus: !toggleValue })
                     }}
                   />
                 </div>

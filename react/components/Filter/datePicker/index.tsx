@@ -17,8 +17,9 @@ const DatePickerComponent: FC<DatepickerProps> = (props) => {
           value={props.startDatePicker}
           maxDate={addDays(new Date(), numDates)}
           onChange={(start: Date) => {
-            if (props.finalDatePicker.getTime() >= start.getTime())
+            if (props.finalDatePicker.getTime() >= start.getTime()) {
               props.changeDate(start, 'start')
+            }
           }}
           locale={culture.locale}
           size="small"
@@ -30,8 +31,9 @@ const DatePickerComponent: FC<DatepickerProps> = (props) => {
           value={props.finalDatePicker}
           maxDate={addDays(new Date(), numDates)}
           onChange={(final: Date) => {
-            if (props.startDatePicker.getTime() <= final.getTime())
+            if (props.startDatePicker.getTime() <= final.getTime()) {
               props.changeDate(final, 'final')
+            }
           }}
           locale={culture.locale}
           size="small"

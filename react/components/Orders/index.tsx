@@ -56,23 +56,21 @@ const Orders: FC<DetailProps> = ({
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
 
-  const [
-    getDataOrders,
-    { data: dataOrders, loading: loadingDataOrders },
-  ] = useLazyQuery(ordersQuery, {
-    ssr: false,
-    pollInterval: 0,
-    variables: {
-      searchOrdersParams: {
-        dateStart: startDate,
-        dateEnd: finalDate,
-        sellerName,
-        page,
-        perpage: pageSize,
-        status: statusOrders,
+  const [getDataOrders, { data: dataOrders, loading: loadingDataOrders }] =
+    useLazyQuery(ordersQuery, {
+      ssr: false,
+      pollInterval: 0,
+      variables: {
+        searchOrdersParams: {
+          dateStart: startDate,
+          dateEnd: finalDate,
+          sellerName,
+          page,
+          perpage: pageSize,
+          status: statusOrders,
+        },
       },
-    },
-  })
+    })
 
   const IDCell = (props: CellRendererProps) => {
     return (
