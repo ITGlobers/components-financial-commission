@@ -41,6 +41,7 @@
   "admin/table-seller-status": "Status",
   "admin/table-seller-invoice": "ID invoice",
   "admin/table-seller-created": "Invoice Created Date",
+  "admin/table-seller-download": "Download",
   "admin/modal-settings.billingCycle": "Section title for billing cycle",
   "admin/modal-settings.billingCycle-helpText": "Repercution explanation about modifying billing cycle",
   "admin/modal-settings.alert-warning": "Warning about modifying settings",
