@@ -153,6 +153,9 @@ const Filter: FC<FilterProps> = (props) => {
     })
   }
 
+  // eslint-disable-next-line no-console
+  console.log(dataFilter)
+
   return (
     <div className="flex flex-wrap pa0">
       {!props.disableSelect && (
@@ -196,6 +199,7 @@ const Filter: FC<FilterProps> = (props) => {
           <ButtonGroup
             buttons={[
               <ButtonWithIcon
+                key="filter"
                 isActiveOfGroup
                 onClick={() => changesValuesTable()}
                 icon={<IconFilter />}
@@ -204,6 +208,7 @@ const Filter: FC<FilterProps> = (props) => {
                 {<FormattedMessage id="admin/table.title-filter" />}
               </ButtonWithIcon>,
               <ButtonWithIcon
+                key="delete"
                 isActiveOfGroup={false}
                 size="small"
                 onClick={() => cleanFilter()}

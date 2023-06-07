@@ -13,11 +13,12 @@ import {
   Tabs,
 } from 'vtex.styleguide'
 
+import { Filter } from './components'
 import Orders from './components/Orders'
+import PayoutReport from './components/PayoutReport'
 import SellerInvoices from './components/SellerInvoices'
 import SellerOrders from './components/SellerOrders'
-import { Filter } from './components'
-import { status, defaultStartString, defaultFinalString } from './constants'
+import { defaultFinalString, defaultStartString, status } from './constants'
 
 const dateDefaultPicker = {
   startDatePicker: new Date(`${defaultStartString}T00:00:00`),
@@ -235,6 +236,15 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                 setDataTableInvoice={setTableInvoices}
                 settingsQuery={settingsQuery}
               />
+            </div>
+          </Tab>
+          <Tab
+            label={<FormattedMessage id="admin/table.title-tab-payout" />}
+            active={tabs === 3}
+            onClick={() => setTabs(3)}
+          >
+            <div className="mt5">
+              <PayoutReport />
             </div>
           </Tab>
         </Tabs>

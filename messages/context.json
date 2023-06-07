@@ -11,6 +11,7 @@
   "admin/table.pagination-show": "show rows",
   "admin/table.pagination-textOf": "of",
   "admin/table.title-tab-invoices": "Title tab to Invoices",
+  "admin/table.title-tab-payout": "Title tab to Payout",
   "admin/form-settings.button-invoice": "Create Invoice",
   "admin/form-settings.invalid-invoice": "Filter orders by invoiced status and within a proper range to enable CREATE INVOICE button",
   "admin/modal-settings.email-empty": "Specify an email address",

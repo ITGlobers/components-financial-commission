@@ -20,6 +20,7 @@ interface DetailProps {
   finalDate?: string
   dataTableInvoice: Invoice[]
   settingsQuery: DocumentNode
+  // jsonData: any
   setDataTableInvoice: (data: Invoice[]) => void
 }
 

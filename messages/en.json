@@ -47,5 +47,6 @@
   "admin/modal-settings.alert-warning": "Proceed with caution. All sellers that currently don't have individual settings will be affected",
   "admin/form-settings.button-new": "Generate a new one",
   "admin/navigation.detail-title": "Seller Invoice Detail",
-  "admin/table-seller-download": "Download"
+  "admin/table-seller-download": "Download",
+  "admin/table.title-tab-payout": "Payout Report"
 }

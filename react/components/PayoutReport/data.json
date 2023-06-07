@@ -1,0 +1,21 @@
+{
+  "sellerId": "ABC123",
+  "paymentMethod": "Credit Card",
+  "creationDate": "2023-06-06",
+  "timeZone": "UTC",
+  "transactionType": "Sale",
+  "grossCurrency": "USD",
+  "grossDebit": 100.0,
+  "grossCredit": null,
+  "exchangeRate": 1.0,
+  "netCurrency": "USD",
+  "netDebit": 97.0,
+  "netCredit": null,
+  "commissionAmount": 3.0,
+  "orderId": "ORD123",
+  "payId": "PAY456",
+  "invoiceId": "INV789",
+  "chargebackType": null,
+  "reserved1": null,
+  "reserved2": null
+}

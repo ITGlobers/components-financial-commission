@@ -1,27 +1,27 @@
+import type { DocumentNode } from 'graphql'
 import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
+import { useMutation, useQuery } from 'react-apollo'
+import { FormattedMessage } from 'react-intl'
+import { useRuntime } from 'vtex.render-runtime'
 import {
+  ActionMenu,
+  Alert,
+  Box,
+  Button,
+  IconOptionsDots,
   Layout,
   PageBlock,
   PageHeader,
-  ActionMenu,
-  IconOptionsDots,
-  Alert,
   EXPERIMENTAL_Select as Select,
-  Box,
-  Button,
-  Toggle,
-  EXPERIMENTAL_Table as Table,
   Spinner,
+  EXPERIMENTAL_Table as Table,
+  Toggle,
 } from 'vtex.styleguide'
-import { FormattedMessage } from 'react-intl'
-import { useQuery, useMutation } from 'react-apollo'
-import { useRuntime } from 'vtex.render-runtime'
-import type { DocumentNode } from 'graphql'
 
+import { Filter, TokenAuth } from './components'
 import TableComponent from './components/Table'
 import PaginationComponent from './components/Table/pagination'
-import { Filter, TokenAuth } from './components'
 
 interface SettingsProps {
   getSellersQuery: DocumentNode
@@ -178,7 +178,7 @@ const Settings: FC<SettingsProps> = (props) => {
         }}
         options={[
           {
-            label: <FormattedMessage id="admin/table-settings-detail" />,
+            label: 'hola',
             onClick: () => {
               navigate({
                 to: `/admin/app/commission-report/settings/detail/${data.id}`,
