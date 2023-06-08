@@ -36,6 +36,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
     dataSellers,
     invoicesQuery,
     settingsQuery,
+    payoutReportsQuery,
   } = props
 
   const [startDate, setStartDate] = useState('')
@@ -50,6 +51,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
   const [statusOrders, setStatusOrders] = useState('')
   const [tableOrders, setTableOrders] = useState<TableOrdersType[]>([])
   const [tableInvoices, setTableInvoices] = useState<Invoice[]>([])
+  const [tablePayouts, setTablePayouts] = useState<any[]>([])
 
   const formatDate = (valueDate: number) => {
     const validateDate = valueDate <= 9 ? `0${valueDate}` : valueDate
@@ -244,7 +246,16 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
             onClick={() => setTabs(3)}
           >
             <div className="mt5">
-              <PayoutReport />
+              <PayoutReport
+                payoutReportsQuery={payoutReportsQuery}
+                account={account}
+                sellerName={sellerName}
+                startDate={startDate}
+                finalDate={finalDate}
+                dataTableInvoice={tablePayouts}
+                setDataTableInvoice={setTablePayouts}
+                settingsQuery={settingsQuery}
+              />
             </div>
           </Tab>
         </Tabs>
