@@ -38,7 +38,7 @@ const PayoutReport: FC<DetailProps> = ({
   const [itemFrom, setItemFrom] = useState(1)
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
-  const [showStatus, setShowStatus] = useState(true)
+  const [, setShowStatus] = useState(true)
 
   const { data: settings } = useQuery(settingsQuery, {
     ssr: false,
@@ -74,19 +74,42 @@ const PayoutReport: FC<DetailProps> = ({
   const schemaTableInvoice = [
     {
       id: 'id',
-      title: <FormattedMessage id="admin/table-seller-invoice" />,
+      title: <FormattedMessage id="admin/table-payout-id" />,
+      cellRenderer: (props: any) => {
+        return (
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+          <a
+            href={`/admin/app/commission-report/invoice/${props.data}`}
+            style={{ color: '#0C389F' }}
+            target="_self"
+            rel="noreferrer"
+          >
+            {props.data}
+          </a>
+        )
+      },
+    },
+    {
+      id: 'creationDate',
+      title: <FormattedMessage id="admin/table-payout-creationDate" />,
     },
     {
       id: 'paymentMethod',
-      title: <FormattedMessage id="admin/table-seller-created" />,
+      title: <FormattedMessage id="admin/table-payout-paymentMethod" />,
     },
     {
       id: 'grossDebit',
-      title: <FormattedMessage id="admin/table-seller-status" />,
+      title: <FormattedMessage id="admin/table-payout-grossDebit" />,
+    },
+    {
+      id: 'grossCurrency',
+      title: <FormattedMessage id="admin/table-payout-grossCurrency" />,
+    },
+    {
+      id: 'commissionAmount',
+      title: <FormattedMessage id="admin/table-payout-commissionAmount" />,
     },
   ]
-
-  !showStatus && schemaTableInvoice.splice(2, 1)
 
   const changeRows = (row: number) => {
     setPageSize(row)

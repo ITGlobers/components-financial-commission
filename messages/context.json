@@ -47,5 +47,11 @@
   "admin/modal-settings.billingCycle-helpText": "Repercution explanation about modifying billing cycle",
   "admin/modal-settings.alert-warning": "Warning about modifying settings",
   "admin/form-settings.button-new": "Generate a new one",
-  "admin/navigation.detail-title": "Seller Invoice Detail"
+  "admin/navigation.detail-title": "Seller Invoice Detail",
+  "admin/table-payout-id": "Payout ID",
+  "admin/table-payout-paymentMethod": "Payment Method",
+  "admin/table-payout-grossDebit": "Gross Debit",
+  "admin/table-payout-creationDate": "Creation Date",
+  "admin/table-payout-grossCurrency": "Gross Currency",
+  "admin/table-payout-commissionAmount": "Commission Amount"
 }

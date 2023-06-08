@@ -47,6 +47,11 @@
   "admin/modal-settings.alert-warning": "Proceed with caution. All sellers that currently don't have individual settings will be affected",
   "admin/form-settings.button-new": "Generate a new one",
   "admin/navigation.detail-title": "Seller Invoice Detail",
-  "admin/table-seller-download": "Download",
-  "admin/table.title-tab-payout": "Payout Report"
+  "admin/table.title-tab-payout": "Payout Report",
+  "admin/table-payout-id": "Payout ID",
+  "admin/table-payout-paymentMethod": "Payment Method",
+  "admin/table-payout-grossDebit": "Gross Debit",
+  "admin/table-payout-creationDate": "Creation Date",
+  "admin/table-payout-grossCurrency": "Gross Currency",
+  "admin/table-payout-commissionAmount": "Commission Amount"
 }
