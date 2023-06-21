@@ -1,30 +1,30 @@
-import type { FC } from 'react'
 import type { DocumentNode } from 'graphql'
+import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
+import { useLazyQuery, useQuery } from 'react-apollo'
+import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
+import { useRuntime } from 'vtex.render-runtime'
 import {
-  Layout,
-  PageBlock,
+  ActionMenu,
+  ButtonWithIcon,
+  Divider,
+  IconArrowUp,
+  IconCog,
+  IconInfo,
+  IconOptionsDots,
   IconShoppingCart,
   IconUser,
-  IconArrowUp,
-  IconInfo,
-  PageHeader,
-  ActionMenu,
-  IconOptionsDots,
-  IconCog,
-  ButtonWithIcon,
+  Layout,
   Modal,
-  Divider,
+  PageBlock,
+  PageHeader,
   Toggle,
 } from 'vtex.styleguide'
-import { useQuery, useLazyQuery } from 'react-apollo'
-import { useRuntime } from 'vtex.render-runtime'
-import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
 
 import { Filter, Totalizer } from './components'
 import TableComponent from './components/Table'
 import PaginationComponent from './components/Table/pagination'
-import { defaultStartString, defaultFinalString } from './constants'
+import { defaultFinalString, defaultStartString } from './constants'
 
 const dateDefaultPicker = {
   startDatePicker: new Date(`${defaultStartString}T00:00:00`),
@@ -100,21 +100,23 @@ const CommissionReport: FC<ReportProps> = (props) => {
     }
   )
 
-  const [dashboard, { data: dataDashboard, loading: loadingDataDashboard }] =
-    useLazyQuery(searchSellersQuery, {
-      ssr: false,
-      pollInterval: 0,
-      variables: {
-        param: {
-          dateStart: startDate,
-          dateEnd: finalDate,
-          page,
-          pageSize,
-          sellersId,
-          sort: orderSort,
-        },
+  const [
+    dashboard,
+    { data: dataDashboard, loading: loadingDataDashboard },
+  ] = useLazyQuery(searchSellersQuery, {
+    ssr: false,
+    pollInterval: 0,
+    variables: {
+      param: {
+        dateStart: startDate,
+        dateEnd: finalDate,
+        page,
+        pageSize,
+        sellersId,
+        sort: orderSort,
       },
-    })
+    },
+  })
 
   // id name ordersCount totalComission totalOrderValue
 
@@ -253,7 +255,7 @@ const CommissionReport: FC<ReportProps> = (props) => {
         ) {
           setSellersDashboard([])
           setTotalItems(0)
-          setOptionsSelect([])
+          // setOptionsSelect([])
         }
       }
 
@@ -305,6 +307,7 @@ const CommissionReport: FC<ReportProps> = (props) => {
     totalItems,
     totalItemsFilter,
     totalOrder,
+    setOptionsSelect,
   ])
 
   const formatDate = (valueDate: number) => {
@@ -409,7 +412,7 @@ const CommissionReport: FC<ReportProps> = (props) => {
     >
       <div className="w-100 flex justify-end">
         <ButtonWithIcon
-          icon={<IconCog color="#979899" />}
+          icon={<IconCog color="blue" />}
           variation="tertiary"
           onClick={() => setModalColumns(true)}
         />

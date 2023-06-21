@@ -11,6 +11,7 @@
   "admin/table.pagination-show": "show rows",
   "admin/table.pagination-textOf": "of",
   "admin/table.title-tab-invoices": "Title tab to Invoices",
+  "admin/table.title-tab-payout": "Title tab to Payout",
   "admin/form-settings.button-invoice": "Create Invoice",
   "admin/form-settings.invalid-invoice": "Filter orders by invoiced status and within a proper range to enable CREATE INVOICE button",
   "admin/modal-settings.email-empty": "Specify an email address",
@@ -46,5 +47,11 @@
   "admin/modal-settings.billingCycle-helpText": "Repercution explanation about modifying billing cycle",
   "admin/modal-settings.alert-warning": "Warning about modifying settings",
   "admin/form-settings.button-new": "Generate a new one",
-  "admin/navigation.detail-title": "Seller Invoice Detail"
+  "admin/navigation.detail-title": "Seller Invoice Detail",
+  "admin/table-payout-id": "Payout ID",
+  "admin/table-payout-paymentMethod": "Payment Method",
+  "admin/table-payout-grossDebit": "Gross Debit",
+  "admin/table-payout-creationDate": "Creation Date",
+  "admin/table-payout-grossCurrency": "Gross Currency",
+  "admin/table-payout-commissionAmount": "Commission Amount"
 }

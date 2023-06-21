@@ -175,6 +175,7 @@ interface DetailProps {
   invoiceMutation: DocumentNode
   invoicesQuery: DocumentNode
   settingsQuery?: DocumentNode
+  payoutReportsQuery?: DocumentNode
 }
 
 type SellerSettingsToken = Partial<TokenConfiguration>

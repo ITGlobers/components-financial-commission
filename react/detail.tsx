@@ -13,11 +13,12 @@ import {
   Tabs,
 } from 'vtex.styleguide'
 
+import { Filter } from './components'
 import Orders from './components/Orders'
+import PayoutReport from './components/PayoutReport'
 import SellerInvoices from './components/SellerInvoices'
 import SellerOrders from './components/SellerOrders'
-import { Filter } from './components'
-import { status, defaultStartString, defaultFinalString } from './constants'
+import { defaultFinalString, defaultStartString, status } from './constants'
 
 const dateDefaultPicker = {
   startDatePicker: new Date(`${defaultStartString}T00:00:00`),
@@ -35,6 +36,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
     dataSellers,
     invoicesQuery,
     settingsQuery,
+    payoutReportsQuery,
   } = props
 
   const [startDate, setStartDate] = useState('')
@@ -49,6 +51,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
   const [statusOrders, setStatusOrders] = useState('')
   const [tableOrders, setTableOrders] = useState<TableOrdersType[]>([])
   const [tableInvoices, setTableInvoices] = useState<Invoice[]>([])
+  const [tablePayouts, setTablePayouts] = useState<any[]>([])
 
   const formatDate = (valueDate: number) => {
     const validateDate = valueDate <= 9 ? `0${valueDate}` : valueDate
@@ -233,6 +236,24 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                 finalDate={finalDate}
                 dataTableInvoice={tableInvoices}
                 setDataTableInvoice={setTableInvoices}
+                settingsQuery={settingsQuery}
+              />
+            </div>
+          </Tab>
+          <Tab
+            label={<FormattedMessage id="admin/table.title-tab-payout" />}
+            active={tabs === 3}
+            onClick={() => setTabs(3)}
+          >
+            <div className="mt5">
+              <PayoutReport
+                payoutReportsQuery={payoutReportsQuery}
+                account={account}
+                sellerName={sellerName}
+                startDate={startDate}
+                finalDate={finalDate}
+                dataTableInvoice={tablePayouts}
+                setDataTableInvoice={setTablePayouts}
                 settingsQuery={settingsQuery}
               />
             </div>
