@@ -178,7 +178,7 @@ const Settings: FC<SettingsProps> = (props) => {
         }}
         options={[
           {
-            label: 'hola',
+            label: 'Detail',
             onClick: () => {
               navigate({
                 to: `/admin/app/commission-report/settings/detail/${data.id}`,

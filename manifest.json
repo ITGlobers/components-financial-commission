@@ -1,13 +1,23 @@
 {
-  "vendor": "vtex",
+  "vendor": "itglobers",
   "name": "components-financial-commission",
-  "version": "0.0.13",
+  "version": "1.0.0",
   "title": "Frontend components for financial commission app",
   "description": "Frontend components for financial commission app",
   "builders": {
     "react": "3.x",
     "messages": "1.x",
     "docs": "0.x"
+  },
+  "billingOptions": {
+    "type": "free",
+    "support": {
+      "email": "support@com.br",
+      "url": "https://support.com/hc/requests"
+    },
+    "availableCountries": [
+      "*"
+    ]
   },
   "dependencies": {
     "vtex.styleguide": "9.x",
