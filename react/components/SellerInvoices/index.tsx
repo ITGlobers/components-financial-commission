@@ -136,7 +136,7 @@ const SellerInvoices: FC<DetailProps> = ({
           // eslint-disable-next-line jsx-a11y/anchor-is-valid
           <>
             <a
-              href={`/_v/financial-commission/${props.data.sellerId}/invoice/${props.data.id}/generate/xls?sellerName=${props.data.sellerName}`}
+              href={`/_v/private/financial-commission/external/invoice/file/${props.data.id}/type/xls`}
               style={{ color: '#0C389F' }}
               target="_self"
               rel="noreferrer"
@@ -146,23 +146,13 @@ const SellerInvoices: FC<DetailProps> = ({
             </a>
             <span> | </span>
             <a
-              href={`/_v/financial-commission/${props.data.sellerId}/invoice/${props.data.id}/generate/csv?sellerName=${props.data.sellerName}`}
+              href={`/_v/private/financial-commission/external/invoice/file/${props.data.id}/type/csv`}
               style={{ color: '#0C389F' }}
               target="_self"
               rel="noreferrer"
             >
               {/* {props.data.idVisible} */}
               CSV
-            </a>
-            <span> | </span>
-            <a
-              href={`/_v/financial-commission/${props.data.sellerId}/invoice/${props.data.id}/generate/pdf?sellerName=${props.data.sellerName}`}
-              style={{ color: '#0C389F' }}
-              target="_self"
-              rel="noreferrer"
-            >
-              {/* {props.data.idVisible} */}
-              PDF
             </a>
           </>
         )

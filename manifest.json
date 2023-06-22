@@ -1,7 +1,7 @@
 {
   "vendor": "itglobers",
   "name": "components-financial-commission",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "title": "Frontend components for financial commission app",
   "description": "Frontend components for financial commission app",
   "builders": {
