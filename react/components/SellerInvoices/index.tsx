@@ -154,6 +154,16 @@ const SellerInvoices: FC<DetailProps> = ({
               {/* {props.data.idVisible} */}
               CSV
             </a>
+            <span> | </span>
+            <a
+              href={`/_v/private/financial-commission/external/invoice/file/${props.data.id}/type/pdf`}
+              style={{ color: '#0C389F' }}
+              target="_self"
+              rel="noreferrer"
+            >
+              {/* {props.data.idVisible} */}
+              PDF
+            </a>
           </>
         )
       },
