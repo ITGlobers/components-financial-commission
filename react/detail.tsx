@@ -25,7 +25,6 @@ const dateDefaultPicker = {
   finalDatePicker: new Date(`${defaultFinalString}T00:00:00`),
   defaultStartDate: defaultStartString,
   defaultFinalDate: defaultFinalString,
-  today: true,
 }
 
 const CommissionReportDetail: FC<DetailProps> = (props) => {
@@ -52,6 +51,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
   const [tableOrders, setTableOrders] = useState<TableOrdersType[]>([])
   const [tableInvoices, setTableInvoices] = useState<Invoice[]>([])
   const [tablePayouts, setTablePayouts] = useState<any[]>([])
+  const [today, setToday] = useState(false)
 
   const formatDate = (valueDate: number) => {
     const validateDate = valueDate <= 9 ? `0${valueDate}` : valueDate
@@ -163,7 +163,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
           <div className="mt2">
             <PageBlock>
               <Filter
-                defaultDate={dateDefaultPicker}
+                defaultDate={{...dateDefaultPicker, today}}
                 optionsSelect={optionsSelect}
                 filterDates={filterDates}
                 setSellerId={setSellerName}
@@ -182,7 +182,10 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
           <Tab
             label={<FormattedMessage id="admin/table.title-tab-commission" />}
             active={tabs === 1}
-            onClick={() => setTabs(1)}
+            onClick={() => {
+              setTabs(1)
+              setToday(false)
+            }}
           >
             <div className="mt5">
               {settingsQuery ? (
@@ -225,7 +228,10 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
           <Tab
             label={<FormattedMessage id="admin/table.title-tab-invoices" />}
             active={tabs === 2}
-            onClick={() => setTabs(2)}
+            onClick={() => {
+              setTabs(2)
+              setToday(true)
+            }}
           >
             <div className="mt5">
               <SellerInvoices

@@ -15,7 +15,7 @@ const DatePickerComponent: FC<DatepickerProps> = (props) => {
         <DatePicker
           label={<FormattedMessage id="admin/table.title-datepicker-start" />}
           value={props.startDatePicker}
-          maxDate={addDays(new Date(), numDates)}
+          maxDate={props.finalDatePicker}
           onChange={(start: Date) => {
             if (props.finalDatePicker.getTime() >= start.getTime()) {
               props.changeDate(start, 'start')
@@ -29,6 +29,7 @@ const DatePickerComponent: FC<DatepickerProps> = (props) => {
         <DatePicker
           label={<FormattedMessage id="admin/table.title-datepicker-final" />}
           value={props.finalDatePicker}
+          minDate={props.startDatePicker}
           maxDate={addDays(new Date(), numDates)}
           onChange={(final: Date) => {
             if (props.startDatePicker.getTime() <= final.getTime()) {
