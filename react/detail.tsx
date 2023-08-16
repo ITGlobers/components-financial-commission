@@ -163,7 +163,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
           <div className="mt2">
             <PageBlock>
               <Filter
-                defaultDate={{...dateDefaultPicker, today}}
+                defaultDate={{ ...dateDefaultPicker, today }}
                 optionsSelect={optionsSelect}
                 filterDates={filterDates}
                 setSellerId={setSellerName}
@@ -249,7 +249,10 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
           <Tab
             label={<FormattedMessage id="admin/table.title-tab-payout" />}
             active={tabs === 3}
-            onClick={() => setTabs(3)}
+            onClick={() => {
+              setTabs(3)
+              setToday(true)
+            }}
           >
             <div className="mt5">
               <PayoutReport

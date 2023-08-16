@@ -26,8 +26,8 @@ interface DetailProps {
 const PayoutReport: FC<DetailProps> = ({
   sellerName,
   payoutReportsQuery,
-  // startDate,
-  // finalDate,
+  startDate,
+  finalDate,
   dataTableInvoice,
   settingsQuery,
   setDataTableInvoice,
@@ -48,6 +48,19 @@ const PayoutReport: FC<DetailProps> = ({
   const { data: dataPayouts } = useQuery(payoutReportsQuery, {
     ssr: false,
     pollInterval: 0,
+    variables: {
+      params: {
+        sellerName,
+        dates: {
+          startDate,
+          endDate: finalDate,
+        },
+        pagination: {
+          page,
+          pageSize,
+        },
+      },
+    },
   })
 
   useEffect(() => {
@@ -66,7 +79,7 @@ const PayoutReport: FC<DetailProps> = ({
   useEffect(() => {
     if (dataPayouts) {
       setDataTableInvoice(dataPayouts.searchPayoutReport.data)
-      setTotalItems(dataPayouts.searchPayoutReport.paging.total)
+      setTotalItems(dataPayouts.searchPayoutReport.pagination.total)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataPayouts, sellerName])
@@ -90,24 +103,28 @@ const PayoutReport: FC<DetailProps> = ({
       },
     },
     {
-      id: 'creationDate',
-      title: <FormattedMessage id="admin/table-payout-creationDate" />,
+      id: 'reportCreatedDate',
+      title: <FormattedMessage id="admin/table-payout-reportCreatedDate" />,
     },
     {
-      id: 'paymentMethod',
-      title: <FormattedMessage id="admin/table-payout-paymentMethod" />,
-    },
-    {
-      id: 'grossDebit',
-      title: <FormattedMessage id="admin/table-payout-grossDebit" />,
-    },
-    {
-      id: 'grossCurrency',
-      title: <FormattedMessage id="admin/table-payout-grossCurrency" />,
-    },
-    {
-      id: 'commissionAmount',
-      title: <FormattedMessage id="admin/table-payout-commissionAmount" />,
+      id: 'id',
+      title: <FormattedMessage id="admin/table-seller-download" />,
+      // eslint-disable-next-line react/display-name
+      cellRenderer: (props: any) => {
+        return (
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+          <>
+            <a
+              href={`/_v/private/financial-commission/external/payout/file/${props.data}/type/xls`}
+              style={{ color: '#0C389F' }}
+              target="_self"
+              rel="noreferrer"
+            >
+              XLS
+            </a>
+          </>
+        )
+      },
     },
   ]
 

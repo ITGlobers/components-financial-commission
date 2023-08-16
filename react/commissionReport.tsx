@@ -100,23 +100,21 @@ const CommissionReport: FC<ReportProps> = (props) => {
     }
   )
 
-  const [
-    dashboard,
-    { data: dataDashboard, loading: loadingDataDashboard },
-  ] = useLazyQuery(searchSellersQuery, {
-    ssr: false,
-    pollInterval: 0,
-    variables: {
-      param: {
-        dateStart: startDate,
-        dateEnd: finalDate,
-        page,
-        pageSize,
-        sellersId,
-        sort: orderSort,
+  const [dashboard, { data: dataDashboard, loading: loadingDataDashboard }] =
+    useLazyQuery(searchSellersQuery, {
+      ssr: false,
+      pollInterval: 0,
+      variables: {
+        param: {
+          dateStart: startDate,
+          dateEnd: finalDate,
+          page,
+          pageSize,
+          sellersId,
+          sort: orderSort,
+        },
       },
-    },
-  })
+    })
 
   // id name ordersCount totalComission totalOrderValue
 

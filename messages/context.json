@@ -53,5 +53,6 @@
   "admin/table-payout-grossDebit": "Gross Debit",
   "admin/table-payout-creationDate": "Creation Date",
   "admin/table-payout-grossCurrency": "Gross Currency",
-  "admin/table-payout-commissionAmount": "Commission Amount"
+  "admin/table-payout-commissionAmount": "Commission Amount",
+  "admin/table-payout-reportCreatedDate": "Report Created Date"
 }
