@@ -30,7 +30,7 @@ interface DetailProps {
   dataTableOrders: TableOrdersType[]
   setDataTableOrders: (data: TableOrdersType[]) => void
   validRange: boolean
-  settingsQuery: DocumentNode
+  settingsQuery?: DocumentNode
 }
 
 const Orders: FC<DetailProps> = ({

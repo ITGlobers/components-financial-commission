@@ -18,7 +18,7 @@ interface DetailProps {
   startDate?: string
   finalDate?: string
   dataTableInvoice: Invoice[]
-  settingsQuery: DocumentNode
+  settingsQuery?: DocumentNode
   // jsonData: any
   setDataTableInvoice: (data: Invoice[]) => void
 }
@@ -29,7 +29,7 @@ const PayoutReport: FC<DetailProps> = ({
   startDate,
   finalDate,
   dataTableInvoice,
-  settingsQuery,
+  // settingsQuery,
   setDataTableInvoice,
 }) => {
   const { query } = useRuntime()
@@ -38,12 +38,12 @@ const PayoutReport: FC<DetailProps> = ({
   const [itemFrom, setItemFrom] = useState(1)
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
-  const [, setShowStatus] = useState(true)
+  // const [, setShowStatus] = useState(true)
 
-  const { data: settings } = useQuery(settingsQuery, {
-    ssr: false,
-    pollInterval: 0,
-  })
+  // const { data: settings } = useQuery(settingsQuery, {
+  //   ssr: false,
+  //   pollInterval: 0,
+  // })
 
   const { data: dataPayouts } = useQuery(payoutReportsQuery, {
     ssr: false,
@@ -63,11 +63,11 @@ const PayoutReport: FC<DetailProps> = ({
     },
   })
 
-  useEffect(() => {
-    if (settings) {
-      setShowStatus(settings.getSettings.showStatus)
-    }
-  }, [settings])
+  // useEffect(() => {
+  //   if (settings) {
+  //     setShowStatus(settings.getSettings.showStatus)
+  //   }
+  // }, [settings])
 
   useEffect(() => {
     if (sellerName === '' && !query?.sellerName) {

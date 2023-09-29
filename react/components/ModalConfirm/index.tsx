@@ -1,27 +1,24 @@
 import type { FC } from 'react'
-import React, { useState, useEffect } from 'react'
-import { useMutation, useQuery } from 'react-apollo'
+import React, { useState } from 'react'
+import { useMutation } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
 import { Alert, Button, Input, ModalDialog, Spinner } from 'vtex.styleguide'
 
 import styles from '../../styles.css'
 
 const ModalConfirm: FC<ModalConfirmData> = (props) => {
-  const { settingsQuery } = props
+  // const { settingsQuery } = props
 
   const [email, setEmail] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [validEmail, setValidEmail] = useState(true)
   const [empty, setEmpty] = useState(true)
-  const [showEmail, setShowEmail] = useState(true)
+  // const [showEmail, setShowEmail] = useState(true)
 
-  // eslint-disable-next-line no-console
-  console.log(showEmail)
-
-  const { data: settings } = useQuery(settingsQuery, {
-    ssr: false,
-    pollInterval: 0,
-  })
+  // const { data: settings } = useQuery(settingsQuery, {
+  //   ssr: false,
+  //   pollInterval: 0,
+  // })
 
   const EMAIL_PATTERN = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
 
@@ -80,11 +77,11 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
     })
   }
 
-  useEffect(() => {
-    if (settings) {
-      setShowEmail(settings.getSettings.showEmail)
-    }
-  }, [settings])
+  // useEffect(() => {
+  //   if (settings) {
+  //     setShowEmail(settings.getSettings.showEmail)
+  //   }
+  // }, [settings])
 
   if (loading) {
     return (
@@ -115,9 +112,10 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
       <ModalDialog
         centered
         confirmation={{
-          disabled: showEmail ? empty || !validEmail : false,
+          // disabled: showEmail ? empty || !validEmail : false,
           onClick: () => {
-            if (showEmail && (empty || !validEmail)) {
+            // if (showEmail && (empty || !validEmail)) {
+            if (empty || !validEmail) {
               return
             }
 
@@ -139,29 +137,29 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(!isModalOpen)}
       >
-        {showEmail ? (
+        {/* {showEmail ? ( */}
+        <div>
+          <p>{props.messages.warning}</p>
+          <p>{props.messages.confirmation}</p>
           <div>
-            <p>{props.messages.warning}</p>
-            <p>{props.messages.confirmation}</p>
-            <div>
-              <Input
-                placeholder="e-mail"
-                size="large"
-                value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  setEmail(e.target.value)
-                  checkEmail(e.target.value)
-                }}
-                errorMessage={getErrorMessage()}
-              />
-            </div>
+            <Input
+              placeholder="e-mail"
+              size="large"
+              value={email}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setEmail(e.target.value)
+                checkEmail(e.target.value)
+              }}
+              errorMessage={getErrorMessage()}
+            />
           </div>
-        ) : (
+        </div>
+        {/* ) : (
           <div>
             <p>{props.messages.noEmailWarning}</p>
             <p>{props.messages.confirmation}</p>
           </div>
-        )}
+        )} */}
       </ModalDialog>
 
       {props.integration !== 'internal' ? null : (

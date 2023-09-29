@@ -15,7 +15,7 @@ import {
 
 import { Filter } from './components'
 import Orders from './components/Orders'
-import PayoutReport from './components/PayoutReport'
+// import PayoutReport from './components/PayoutReport'
 import SellerInvoices from './components/SellerInvoices'
 import SellerOrders from './components/SellerOrders'
 import { defaultFinalString, defaultStartString, status } from './constants'
@@ -35,7 +35,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
     dataSellers,
     invoicesQuery,
     settingsQuery,
-    payoutReportsQuery,
+    // payoutReportsQuery,
   } = props
 
   const [startDate, setStartDate] = useState('')
@@ -50,7 +50,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
   const [statusOrders, setStatusOrders] = useState('')
   const [tableOrders, setTableOrders] = useState<TableOrdersType[]>([])
   const [tableInvoices, setTableInvoices] = useState<Invoice[]>([])
-  const [tablePayouts, setTablePayouts] = useState<any[]>([])
+  // const [tablePayouts, setTablePayouts] = useState<any[]>([])
   const [today, setToday] = useState(false)
 
   const formatDate = (valueDate: number) => {
@@ -220,7 +220,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                   dataTableOrders={tableOrders}
                   setDataTableOrders={setTableOrders}
                   validRange={defaultFinalString !== finalDate}
-                  settingsQuery={settingsQuery}
+                  // settingsQuery={settingsQuery}
                 />
               )}
             </div>
@@ -243,11 +243,11 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                 finalDate={finalDate}
                 dataTableInvoice={tableInvoices}
                 setDataTableInvoice={setTableInvoices}
-                settingsQuery={settingsQuery}
+                // settingsQuery={settingsQuery}
               />
             </div>
           </Tab>
-          <Tab
+          {/* <Tab
             label={<FormattedMessage id="admin/table.title-tab-payout" />}
             active={tabs === 3}
             onClick={() => {
@@ -264,10 +264,10 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                 finalDate={finalDate}
                 dataTableInvoice={tablePayouts}
                 setDataTableInvoice={setTablePayouts}
-                settingsQuery={settingsQuery}
+                // settingsQuery={settingsQuery}
               />
             </div>
-          </Tab>
+          </Tab> */}
         </Tabs>
       </div>
     </Layout>
