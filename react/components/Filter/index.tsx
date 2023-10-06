@@ -95,6 +95,7 @@ const Filter: FC<FilterProps> = (props) => {
         getDateString(dataFilter.startDateFilter),
         getDateString(dataFilter.finalDateFilter)
       )
+
     props.setSellerId(response.stringId.slice(0, -1))
     props.setId && props.setId(response.sellerId.slice(0, -1))
     props.setStatusOrders && props.setStatusOrders(stringStatus.slice(0, -1))
@@ -152,9 +153,6 @@ const Filter: FC<FilterProps> = (props) => {
       finalDate: undefined,
     })
   }
-
-  // eslint-disable-next-line no-console
-  console.log(dataFilter)
 
   return (
     <div className="flex flex-wrap pa0">

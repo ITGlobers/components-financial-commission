@@ -51,8 +51,7 @@ const InvoiceDetail: FC<InvoiceDetailProps> = (props) => {
     if (data !== undefined && template !== '') {
       const hbTemplate = Handlebars.compile(template)
 
-      template &&
-        setHtmlString(hbTemplate({ id, ...data?.getInvoice.jsonData }))
+      template && setHtmlString(hbTemplate({ id, ...data?.getInvoice }))
     }
   }, [data, template])
 

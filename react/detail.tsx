@@ -238,6 +238,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                 invoicesQuery={invoicesQuery}
                 account={account}
                 sellerName={sellerName}
+                sellerId={sellerId}
                 startDate={startDate}
                 finalDate={finalDate}
                 dataTableInvoice={tableInvoices}

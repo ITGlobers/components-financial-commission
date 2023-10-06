@@ -16,6 +16,7 @@ interface DetailProps {
   invoicesQuery: DocumentNode
   account?: string
   sellerName?: string
+  sellerId?: string
   startDate?: string
   finalDate?: string
   dataTableInvoice: Invoice[]
@@ -26,6 +27,7 @@ interface DetailProps {
 
 const SellerInvoices: FC<DetailProps> = ({
   sellerName,
+  sellerId,
   invoicesQuery,
   startDate,
   finalDate,
@@ -52,6 +54,7 @@ const SellerInvoices: FC<DetailProps> = ({
     variables: {
       sellerInvoiceParams: {
         sellerName,
+        sellerId,
         dates: {
           startDate,
           endDate: finalDate,
