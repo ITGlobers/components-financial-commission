@@ -14,10 +14,10 @@ import {
 } from 'vtex.styleguide'
 
 import { Filter } from './components'
-import Orders from './components/Orders'
+
 import PayoutReport from './components/PayoutReport'
 import SellerInvoices from './components/SellerInvoices'
-import SellerOrders from './components/SellerOrders'
+
 import { defaultFinalString, defaultStartString, status } from './constants'
 
 const dateDefaultPicker = {
@@ -30,8 +30,7 @@ const dateDefaultPicker = {
 const CommissionReportDetail: FC<DetailProps> = (props) => {
   const {
     account,
-    ordersQuery,
-    invoiceMutation,
+
     dataSellers,
     invoicesQuery,
     settingsQuery,
@@ -45,10 +44,10 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
   const [sellerId, setSellerId] = useState('')
   const [tabs, setTabs] = useState(1)
   const [openModal, setOpenModal] = useState(false)
-  const [dateRate, setDataRate] = useState<dateRateType[]>([])
+  const [dateRate] = useState<dateRateType[]>([])
   const [optionsStatus, setOptionsStatus] = useState<SellerSelect[]>([])
-  const [statusOrders, setStatusOrders] = useState('')
-  const [tableOrders, setTableOrders] = useState<TableOrdersType[]>([])
+
+
   const [tableInvoices, setTableInvoices] = useState<Invoice[]>([])
   const [tablePayouts, setTablePayouts] = useState<any[]>([])
   const [today, setToday] = useState(false)
@@ -170,7 +169,6 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                 setId={setSellerId}
                 multiValue={false}
                 optionsStatus={optionsStatus}
-                setStatusOrders={setStatusOrders}
                 disableSelect={Boolean(account)}
               />
             </PageBlock>
@@ -180,54 +178,8 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
       <div className="mt7">
         <Tabs fullWidth>
           <Tab
-            label={<FormattedMessage id="admin/table.title-tab-commission" />}
-            active={tabs === 1}
-            onClick={() => {
-              setTabs(1)
-              setToday(false)
-            }}
-          >
-            <div className="mt5">
-              {settingsQuery ? (
-                <SellerOrders
-                  ordersQuery={ordersQuery}
-                  account={account}
-                  sellerName={sellerName}
-                  startDate={startDate}
-                  finalDate={finalDate}
-                  statusOrders={statusOrders}
-                  setDataRate={setDataRate}
-                  sellerId={sellerId}
-                  invoiceMutation={invoiceMutation}
-                  setOpenModal={setOpenModal}
-                  openModal={openModal}
-                  settingsQuery={settingsQuery}
-                  dataTableOrders={tableOrders}
-                  setDataTableOrders={setTableOrders}
-                  validRange={defaultFinalString !== finalDate}
-                />
-              ) : (
-                <Orders
-                  ordersQuery={ordersQuery}
-                  account={account}
-                  sellerName={sellerName}
-                  startDate={startDate}
-                  finalDate={finalDate}
-                  statusOrders={statusOrders}
-                  setDataRate={setDataRate}
-                  sellerId={sellerId}
-                  invoiceMutation={invoiceMutation}
-                  dataTableOrders={tableOrders}
-                  setDataTableOrders={setTableOrders}
-                  validRange={defaultFinalString !== finalDate}
-                  settingsQuery={settingsQuery}
-                />
-              )}
-            </div>
-          </Tab>
-          <Tab
             label={<FormattedMessage id="admin/table.title-tab-invoices" />}
-            active={tabs === 2}
+            active={tabs === 1}
             onClick={() => {
               setTabs(2)
               setToday(true)
@@ -249,7 +201,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
           </Tab>
           <Tab
             label={<FormattedMessage id="admin/table.title-tab-payout" />}
-            active={tabs === 3}
+            active={tabs === 2}
             onClick={() => {
               setTabs(3)
               setToday(true)
