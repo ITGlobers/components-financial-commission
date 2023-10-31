@@ -120,10 +120,6 @@ const Filter: FC<FilterProps> = (props) => {
     setDataFilter({ ...dataFilter, dataFilter: values })
   }
 
-  const modifyDataFilterStatus = (values: SellerSelect[]) => {
-    setDataFilter({ ...dataFilter, statusFilter: values })
-  }
-
   const changeDate = (date: Date, type: string) => {
     if (type === 'start') {
       setDataFilter({ ...dataFilter, startDateFilter: date })
@@ -165,19 +161,6 @@ const Filter: FC<FilterProps> = (props) => {
             multi={props.multiValue}
             customLabel={
               <FormattedMessage id="admin/table.title-seller-label" />
-            }
-          />
-        </div>
-      )}
-      {props.optionsStatus && (
-        <div className="w-100 pt5 mb3">
-          <SelectComponent
-            options={props.optionsStatus}
-            dataFilter={dataFilter.statusFilter}
-            setDataFilter={modifyDataFilterStatus}
-            multi
-            customLabel={
-              <FormattedMessage id="admin/table.title-status-label" />
             }
           />
         </div>
