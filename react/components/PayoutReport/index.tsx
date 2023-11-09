@@ -15,6 +15,7 @@ interface DetailProps {
   payoutReportsQuery: DocumentNode
   account?: string
   sellerName?: string
+  sellerId?: string
   startDate?: string
   finalDate?: string
   dataTableInvoice: Invoice[]
@@ -25,6 +26,7 @@ interface DetailProps {
 
 const PayoutReport: FC<DetailProps> = ({
   sellerName,
+  sellerId,
   payoutReportsQuery,
   startDate,
   finalDate,
@@ -50,7 +52,7 @@ const PayoutReport: FC<DetailProps> = ({
     pollInterval: 0,
     variables: {
       params: {
-        sellerName,
+        sellerId,
         dates: {
           startDate,
           endDate: finalDate,

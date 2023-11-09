@@ -14,10 +14,8 @@ import {
 } from 'vtex.styleguide'
 
 import { Filter } from './components'
-
 import PayoutReport from './components/PayoutReport'
 import SellerInvoices from './components/SellerInvoices'
-
 import { defaultFinalString, defaultStartString, status } from './constants'
 
 const dateDefaultPicker = {
@@ -30,7 +28,6 @@ const dateDefaultPicker = {
 const CommissionReportDetail: FC<DetailProps> = (props) => {
   const {
     account,
-
     dataSellers,
     invoicesQuery,
     settingsQuery,
@@ -47,10 +44,9 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
   const [dateRate] = useState<dateRateType[]>([])
   const [optionsStatus, setOptionsStatus] = useState<SellerSelect[]>([])
 
-
   const [tableInvoices, setTableInvoices] = useState<Invoice[]>([])
   const [tablePayouts, setTablePayouts] = useState<any[]>([])
-  const [today, setToday] = useState(false)
+  const [today, setToday] = useState(true)
 
   const formatDate = (valueDate: number) => {
     const validateDate = valueDate <= 9 ? `0${valueDate}` : valueDate
@@ -181,7 +177,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
             label={<FormattedMessage id="admin/table.title-tab-invoices" />}
             active={tabs === 1}
             onClick={() => {
-              setTabs(2)
+              setTabs(1)
               setToday(true)
             }}
           >
@@ -203,7 +199,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
             label={<FormattedMessage id="admin/table.title-tab-payout" />}
             active={tabs === 2}
             onClick={() => {
-              setTabs(3)
+              setTabs(2)
               setToday(true)
             }}
           >
@@ -212,6 +208,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                 payoutReportsQuery={payoutReportsQuery}
                 account={account}
                 sellerName={sellerName}
+                sellerId={sellerId}
                 startDate={startDate}
                 finalDate={finalDate}
                 dataTableInvoice={tablePayouts}
