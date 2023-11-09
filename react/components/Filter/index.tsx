@@ -120,9 +120,9 @@ const Filter: FC<FilterProps> = (props) => {
     setDataFilter({ ...dataFilter, dataFilter: values })
   }
 
-  const modifyDataFilterStatus = (values: SellerSelect[]) => {
-    setDataFilter({ ...dataFilter, statusFilter: values })
-  }
+  // const modifyDataFilterStatus = (values: SellerSelect[]) => {
+  //   setDataFilter({ ...dataFilter, statusFilter: values })
+  // }
 
   const changeDate = (date: Date, type: string) => {
     if (type === 'start') {
@@ -169,7 +169,7 @@ const Filter: FC<FilterProps> = (props) => {
           />
         </div>
       )}
-      {props.optionsStatus && (
+      {/* {props.optionsStatus && (
         <div className="w-100 pt5 mb3">
           <SelectComponent
             options={props.optionsStatus}
@@ -181,7 +181,7 @@ const Filter: FC<FilterProps> = (props) => {
             }
           />
         </div>
-      )}
+      )} */}
       <div className="flex-ns w-100 justify-around items-end justify-end">
         <div className="w-100-ns pt2 pr2">
           {props.defaultDate && (

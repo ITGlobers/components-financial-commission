@@ -1,7 +1,7 @@
 {
   "vendor": "obidev",
   "name": "components-financial-commission",
-  "version": "1.0.2-beta.0",
+  "version": "1.0.3-seller.5",
   "title": "Frontend components for financial commission app",
   "description": "Frontend components for financial commission app",
   "builders": {

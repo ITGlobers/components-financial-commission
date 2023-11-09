@@ -5,7 +5,7 @@ import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
-import { useRuntime } from 'vtex.render-runtime'
+// import { useRuntime } from 'vtex.render-runtime'
 import { PageBlock, Tag } from 'vtex.styleguide'
 
 import { status } from '../../constants'
@@ -27,7 +27,6 @@ interface DetailProps {
 
 const SellerInvoices: FC<DetailProps> = ({
   sellerName,
-  sellerId,
   invoicesQuery,
   startDate,
   finalDate,
@@ -35,7 +34,7 @@ const SellerInvoices: FC<DetailProps> = ({
   // settingsQuery,
   setDataTableInvoice,
 }) => {
-  const { query } = useRuntime()
+  // const { query } = useRuntime()
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(20)
   const [itemFrom, setItemFrom] = useState(1)
@@ -48,13 +47,12 @@ const SellerInvoices: FC<DetailProps> = ({
   //   pollInterval: 0,
   // })
 
-  const { data: dataInvoices } = useQuery(invoicesQuery, {
+  const { data: dataInvoices, loading } = useQuery(invoicesQuery, {
     ssr: false,
     pollInterval: 0,
     variables: {
       sellerInvoiceParams: {
         sellerName,
-        sellerId,
         dates: {
           startDate,
           endDate: finalDate,
@@ -73,15 +71,16 @@ const SellerInvoices: FC<DetailProps> = ({
   //   }
   // }, [settings])
 
-  useEffect(() => {
-    if (sellerName === '' && !query?.sellerName) {
-      setDataTableInvoice([])
-      setTotalItems(0)
-    }
-  }, [query, sellerName, setDataTableInvoice])
+  // useEffect(() => {
+  //   if (sellerName === '' && !query?.sellerName) {
+  //     setDataTableInvoice([])
+  //     setTotalItems(0)
+  //   }
+  // }, [query, sellerName])
 
   useEffect(() => {
     if (dataInvoices) {
+      console.info('cargo!')
       setDataTableInvoice(dataInvoices.invoicesBySeller.data)
       setTotalItems(dataInvoices.invoicesBySeller.pagination.total)
     }
@@ -209,7 +208,7 @@ const SellerInvoices: FC<DetailProps> = ({
         <TableComponent
           schemaTable={schemaTableInvoice}
           items={dataTableInvoice}
-          loading={false}
+          loading={loading}
         />
         <PaginationComponent
           setPageSize={setPageSize}

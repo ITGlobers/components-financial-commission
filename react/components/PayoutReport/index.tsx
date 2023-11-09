@@ -5,7 +5,7 @@ import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
-import { useRuntime } from 'vtex.render-runtime'
+// import { useRuntime } from 'vtex.render-runtime'
 import { PageBlock } from 'vtex.styleguide'
 
 import TableComponent from '../Table'
@@ -32,7 +32,7 @@ const PayoutReport: FC<DetailProps> = ({
   // settingsQuery,
   setDataTableInvoice,
 }) => {
-  const { query } = useRuntime()
+  // const { query } = useRuntime()
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(20)
   const [itemFrom, setItemFrom] = useState(1)
@@ -45,7 +45,7 @@ const PayoutReport: FC<DetailProps> = ({
   //   pollInterval: 0,
   // })
 
-  const { data: dataPayouts } = useQuery(payoutReportsQuery, {
+  const { data: dataPayouts, loading } = useQuery(payoutReportsQuery, {
     ssr: false,
     pollInterval: 0,
     variables: {
@@ -69,12 +69,12 @@ const PayoutReport: FC<DetailProps> = ({
   //   }
   // }, [settings])
 
-  useEffect(() => {
-    if (sellerName === '' && !query?.sellerName) {
-      setDataTableInvoice([])
-      setTotalItems(0)
-    }
-  }, [query, sellerName, setDataTableInvoice])
+  // useEffect(() => {
+  //   if (sellerName === '' && !query?.sellerName) {
+  //     setDataTableInvoice([])
+  //     setTotalItems(0)
+  //   }
+  // }, [query, sellerName, setDataTableInvoice])
 
   useEffect(() => {
     if (dataPayouts) {
@@ -163,7 +163,7 @@ const PayoutReport: FC<DetailProps> = ({
         <TableComponent
           schemaTable={schemaTableInvoice}
           items={dataTableInvoice}
-          loading={false}
+          loading={loading}
         />
         <PaginationComponent
           setPageSize={setPageSize}

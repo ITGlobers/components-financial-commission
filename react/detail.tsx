@@ -14,10 +14,10 @@ import {
 } from 'vtex.styleguide'
 
 import { Filter } from './components'
-import Orders from './components/Orders'
-// import PayoutReport from './components/PayoutReport'
+// import Orders from './components/Orders'
+import PayoutReport from './components/PayoutReport'
 import SellerInvoices from './components/SellerInvoices'
-import SellerOrders from './components/SellerOrders'
+// import SellerOrders from './components/SellerOrders'
 import { defaultFinalString, defaultStartString, status } from './constants'
 
 const dateDefaultPicker = {
@@ -30,12 +30,12 @@ const dateDefaultPicker = {
 const CommissionReportDetail: FC<DetailProps> = (props) => {
   const {
     account,
-    ordersQuery,
-    invoiceMutation,
+    // ordersQuery,
+    // invoiceMutation,
     dataSellers,
     invoicesQuery,
-    settingsQuery,
-    // payoutReportsQuery,
+    // settingsQuery,
+    payoutReportsQuery,
   } = props
 
   const [startDate, setStartDate] = useState('')
@@ -45,13 +45,13 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
   const [sellerId, setSellerId] = useState('')
   const [tabs, setTabs] = useState(1)
   const [openModal, setOpenModal] = useState(false)
-  const [dateRate, setDataRate] = useState<dateRateType[]>([])
+  const [dateRate] = useState<dateRateType[]>([])
   const [optionsStatus, setOptionsStatus] = useState<SellerSelect[]>([])
-  const [statusOrders, setStatusOrders] = useState('')
-  const [tableOrders, setTableOrders] = useState<TableOrdersType[]>([])
+  const [, setStatusOrders] = useState('')
+  // const [tableOrders, setTableOrders] = useState<TableOrdersType[]>([])
   const [tableInvoices, setTableInvoices] = useState<Invoice[]>([])
-  // const [tablePayouts, setTablePayouts] = useState<any[]>([])
-  const [today, setToday] = useState(false)
+  const [tablePayouts, setTablePayouts] = useState<any[]>([])
+  const [today, setToday] = useState(true)
 
   const formatDate = (valueDate: number) => {
     const validateDate = valueDate <= 9 ? `0${valueDate}` : valueDate
@@ -179,7 +179,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
       </div>
       <div className="mt7">
         <Tabs fullWidth>
-          <Tab
+          {/* <Tab
             label={<FormattedMessage id="admin/table.title-tab-commission" />}
             active={tabs === 1}
             onClick={() => {
@@ -224,12 +224,12 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                 />
               )}
             </div>
-          </Tab>
+          </Tab> */}
           <Tab
             label={<FormattedMessage id="admin/table.title-tab-invoices" />}
-            active={tabs === 2}
+            active={tabs === 1}
             onClick={() => {
-              setTabs(2)
+              setTabs(1)
               setToday(true)
             }}
           >
@@ -247,11 +247,11 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
               />
             </div>
           </Tab>
-          {/* <Tab
+          <Tab
             label={<FormattedMessage id="admin/table.title-tab-payout" />}
-            active={tabs === 3}
+            active={tabs === 2}
             onClick={() => {
-              setTabs(3)
+              setTabs(2)
               setToday(true)
             }}
           >
@@ -267,7 +267,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                 // settingsQuery={settingsQuery}
               />
             </div>
-          </Tab> */}
+          </Tab>
         </Tabs>
       </div>
     </Layout>
