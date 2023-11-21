@@ -165,6 +165,7 @@ const Filter: FC<FilterProps> = (props) => {
           />
         </div>
       )}
+
       <div className="flex-ns w-100 justify-around items-end justify-end">
         <div className="w-100-ns pt2 pr2">
           {props.defaultDate && (

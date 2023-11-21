@@ -16,7 +16,7 @@ import {
 import { Filter } from './components'
 import PayoutReport from './components/PayoutReport'
 import SellerInvoices from './components/SellerInvoices'
-import { defaultFinalString, defaultStartString, status } from './constants'
+import { defaultFinalString, defaultStartString } from './constants'
 
 const dateDefaultPicker = {
   startDatePicker: new Date(`${defaultStartString}T00:00:00`),
@@ -30,7 +30,6 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
     account,
     dataSellers,
     invoicesQuery,
-    settingsQuery,
     payoutReportsQuery,
   } = props
 
@@ -42,11 +41,10 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
   const [tabs, setTabs] = useState(1)
   const [openModal, setOpenModal] = useState(false)
   const [dateRate] = useState<dateRateType[]>([])
-  const [optionsStatus, setOptionsStatus] = useState<SellerSelect[]>([])
-
   const [tableInvoices, setTableInvoices] = useState<Invoice[]>([])
   const [tablePayouts, setTablePayouts] = useState<any[]>([])
   const [today, setToday] = useState(true)
+  const isSeller = Boolean(account)
 
   const formatDate = (valueDate: number) => {
     const validateDate = valueDate <= 9 ? `0${valueDate}` : valueDate
@@ -69,20 +67,6 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSellers])
-
-  useEffect(() => {
-    if (!optionsStatus.length) {
-      const buildSelectStatus: SellerSelect[] = []
-
-      Object.keys(status).forEach((orderStatus) => {
-        buildSelectStatus.push({
-          value: { id: orderStatus, name: orderStatus },
-          label: orderStatus,
-        })
-      })
-      setOptionsStatus(buildSelectStatus)
-    }
-  }, [optionsStatus])
 
   useEffect(() => {
     const defaultDate = new Date()
@@ -164,8 +148,7 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                 setSellerId={setSellerName}
                 setId={setSellerId}
                 multiValue={false}
-                optionsStatus={optionsStatus}
-                disableSelect={Boolean(account)}
+                disableSelect={isSeller}
               />
             </PageBlock>
           </div>
@@ -191,7 +174,6 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                 finalDate={finalDate}
                 dataTableInvoice={tableInvoices}
                 setDataTableInvoice={setTableInvoices}
-                settingsQuery={settingsQuery}
               />
             </div>
           </Tab>
@@ -213,7 +195,6 @@ const CommissionReportDetail: FC<DetailProps> = (props) => {
                 finalDate={finalDate}
                 dataTableInvoice={tablePayouts}
                 setDataTableInvoice={setTablePayouts}
-                settingsQuery={settingsQuery}
               />
             </div>
           </Tab>
