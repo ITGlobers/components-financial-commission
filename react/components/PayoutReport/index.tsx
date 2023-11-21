@@ -5,7 +5,7 @@ import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
-import { useRuntime } from 'vtex.render-runtime'
+// import { useRuntime } from 'vtex.render-runtime'
 import { PageBlock } from 'vtex.styleguide'
 
 import TableComponent from '../Table'
@@ -19,7 +19,7 @@ interface DetailProps {
   startDate?: string
   finalDate?: string
   dataTableInvoice: Invoice[]
-  settingsQuery: DocumentNode
+  settingsQuery?: DocumentNode
   // jsonData: any
   setDataTableInvoice: (data: Invoice[]) => void
 }
@@ -31,23 +31,23 @@ const PayoutReport: FC<DetailProps> = ({
   startDate,
   finalDate,
   dataTableInvoice,
-  settingsQuery,
+  // settingsQuery,
   setDataTableInvoice,
 }) => {
-  const { query } = useRuntime()
+  // const { query } = useRuntime()
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(20)
   const [itemFrom, setItemFrom] = useState(1)
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
-  const [, setShowStatus] = useState(true)
+  // const [, setShowStatus] = useState(true)
 
-  const { data: settings } = useQuery(settingsQuery, {
-    ssr: false,
-    pollInterval: 0,
-  })
+  // const { data: settings } = useQuery(settingsQuery, {
+  //   ssr: false,
+  //   pollInterval: 0,
+  // })
 
-  const { data: dataPayouts } = useQuery(payoutReportsQuery, {
+  const { data: dataPayouts, loading } = useQuery(payoutReportsQuery, {
     ssr: false,
     pollInterval: 0,
     variables: {
@@ -65,18 +65,18 @@ const PayoutReport: FC<DetailProps> = ({
     },
   })
 
-  useEffect(() => {
-    if (settings) {
-      setShowStatus(settings.getSettings.showStatus)
-    }
-  }, [settings])
+  // useEffect(() => {
+  //   if (settings) {
+  //     setShowStatus(settings.getSettings.showStatus)
+  //   }
+  // }, [settings])
 
-  useEffect(() => {
-    if (sellerName === '' && !query?.sellerName) {
-      setDataTableInvoice([])
-      setTotalItems(0)
-    }
-  }, [query, sellerName, setDataTableInvoice])
+  // useEffect(() => {
+  //   if (sellerName === '' && !query?.sellerName) {
+  //     setDataTableInvoice([])
+  //     setTotalItems(0)
+  //   }
+  // }, [query, sellerName, setDataTableInvoice])
 
   useEffect(() => {
     if (dataPayouts) {
@@ -165,7 +165,7 @@ const PayoutReport: FC<DetailProps> = ({
         <TableComponent
           schemaTable={schemaTableInvoice}
           items={dataTableInvoice}
-          loading={false}
+          loading={loading}
         />
         <PaginationComponent
           setPageSize={setPageSize}
