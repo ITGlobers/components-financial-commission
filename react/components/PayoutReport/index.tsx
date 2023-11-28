@@ -124,6 +124,15 @@ const PayoutReport: FC<DetailProps> = ({
             >
               XLS
             </a>
+            <span> | </span>
+            <a
+              href={`/_v/private/financial-commission/external/payout/file/${props.data}/type/csv`}
+              style={{ color: '#0C389F' }}
+              target="_self"
+              rel="noreferrer"
+            >
+              CSV
+            </a>
           </>
         )
       },

@@ -26,12 +26,7 @@ const dateDefaultPicker = {
 }
 
 const CommissionReportDetail: FC<DetailProps> = (props) => {
-  const {
-    account,
-    dataSellers,
-    invoicesQuery,
-    payoutReportsQuery,
-  } = props
+  const { account, dataSellers, invoicesQuery, payoutReportsQuery } = props
 
   const [startDate, setStartDate] = useState('')
   const [finalDate, setFinalDate] = useState('')
