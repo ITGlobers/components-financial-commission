@@ -94,7 +94,7 @@ const PayoutReport: FC<DetailProps> = ({
         return (
           // eslint-disable-next-line jsx-a11y/anchor-is-valid
           <a
-            href={`/admin/app/commission-report/invoice/${props.data}`}
+            href={`/admin/app/commission-report/payout/${props.data}`}
             style={{ color: '#0C389F' }}
             target="_self"
             rel="noreferrer"

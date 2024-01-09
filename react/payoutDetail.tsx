@@ -1,31 +1,25 @@
-import Handlebars from 'handlebars'
 import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
-import { useQuery, useMutation } from 'react-apollo'
+import { useQuery } from 'react-apollo'
 import { useRuntime } from 'vtex.render-runtime'
 import { Layout, Spinner, PageHeader } from 'vtex.styleguide'
 import type { DocumentNode } from 'graphql'
 import { FormattedMessage } from 'react-intl'
 
-interface InvoiceDetailProps {
-  invoiceQuery: DocumentNode
-  getTemplate: DocumentNode
-  sendEmail: DocumentNode
+interface PayoutDetailProps {
+  payoutQuery: DocumentNode
 }
 
-const InvoiceDetail: FC<InvoiceDetailProps> = (props) => {
-  const { invoiceQuery, getTemplate, sendEmail } = props
+const PayoutDetail: FC<PayoutDetailProps> = (props) => {
+  const { payoutQuery } = props
 
   const { route, navigate } = useRuntime()
   const { params } = route
   const { id } = params
 
-  const [, setEmailSent] = useState(false)
-  const [template, setTemplate] = useState('')
   const [htmlString, setHtmlString] = useState('')
-  const [, { data: emailData }] = useMutation(sendEmail)
 
-  const { data } = useQuery(invoiceQuery, {
+  const { data, loading } = useQuery(payoutQuery, {
     ssr: false,
     pollInterval: 0,
     variables: {
@@ -33,30 +27,13 @@ const InvoiceDetail: FC<InvoiceDetailProps> = (props) => {
     },
   })
 
-  const templateSrc = useQuery(getTemplate, {
-    ssr: false,
-    pollInterval: 0,
-  })
-
   useEffect(() => {
-    setTemplate(templateSrc?.data?.getTemplate)
-  }, [templateSrc, template])
-
-  useEffect(() => {
-    if (emailData) {
-      setEmailSent(true)
+    if (data !== undefined && !loading) {
+      setHtmlString(data.getPayout.html)
     }
-  }, [emailData])
+  }, [data, loading])
 
-  useEffect(() => {
-    if (data !== undefined && template !== '') {
-      const hbTemplate = Handlebars.compile(template)
-
-      template && setHtmlString(hbTemplate({ ...data?.getInvoice }))
-    }
-  }, [data, template])
-
-  if (!template || htmlString === '') {
+  if (loading) {
     return (
       <div style={{ position: 'absolute', top: '50%', left: '50%' }}>
         <Spinner />
@@ -107,4 +84,4 @@ const InvoiceDetail: FC<InvoiceDetailProps> = (props) => {
   )
 }
 
-export default InvoiceDetail
+export default PayoutDetail

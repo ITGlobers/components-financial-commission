@@ -147,7 +147,7 @@ const SellerInvoices: FC<DetailProps> = ({
               XLS
             </a>
             <span> | </span>
-            {/* <a
+            <a
               href={`/_v/private/financial-commission/external/invoice/file/${props.data.id}/type/csv`}
               style={{ color: '#0C389F' }}
               target="_self"
@@ -155,7 +155,7 @@ const SellerInvoices: FC<DetailProps> = ({
             >
               CSV
             </a>
-            <span> | </span> */}
+            <span> | </span>
             <a
               href={`/_v/private/financial-commission/external/invoice/file/${props.data.id}/type/pdf`}
               style={{ color: '#0C389F' }}
