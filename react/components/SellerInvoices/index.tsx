@@ -6,9 +6,9 @@ import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
 // import { useRuntime } from 'vtex.render-runtime'
-import { PageBlock, Tag } from 'vtex.styleguide'
+import { PageBlock, /*Tag */} from 'vtex.styleguide'
 
-import { status } from '../../constants'
+//import { status } from '../../constants'
 import TableComponent from '../Table'
 import PaginationComponent from '../Table/pagination'
 
@@ -109,7 +109,7 @@ const SellerInvoices: FC<DetailProps> = ({
     {
       id: 'invoiceCreatedDate',
       title: <FormattedMessage id="admin/table-seller-created" />,
-    },
+    },/*
     {
       id: 'status',
       title: <FormattedMessage id="admin/table-seller-status" />,
@@ -128,7 +128,7 @@ const SellerInvoices: FC<DetailProps> = ({
           </Tag>
         )
       },
-    },
+    },*/
     {
       id: 'downloadFiles',
       title: <FormattedMessage id="admin/table-seller-download" />,

@@ -7,7 +7,7 @@ import {
   ButtonWithIcon,
   IconVisibilityOff,
   PageBlock,
-  Tag,
+  /*Tag,*/
 } from 'vtex.styleguide'
 
 import { status } from '../../constants'
@@ -109,13 +109,13 @@ const Orders: FC<DetailProps> = ({
     )
   }
 
-  const StatusCell = (props: any) => {
+  /*const StatusCell = (props: any) => {
     return (
       <Tag bgColor={props.data.bgColor} color={props.data.fontColor}>
         {props.data.status}
       </Tag>
     )
-  }
+  }*/
 
   const schemaTable = [
     {
@@ -141,12 +141,12 @@ const Orders: FC<DetailProps> = ({
       id: 'rate',
       title: <FormattedMessage id="admin/table-rate-order" />,
       cellRenderer: RateCell,
-    },
+    },/*
     {
       id: 'status',
       title: <FormattedMessage id="admin/table-seller-status" />,
       cellRenderer: StatusCell,
-    },
+    },*/
   ]
 
   const changeRows = (row: number) => {
