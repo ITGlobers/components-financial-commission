@@ -1,7 +1,7 @@
 {
   "vendor": "obi",
   "name": "components-financial-commission",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "title": "Frontend components for financial commission app",
   "description": "Frontend components for financial commission app",
   "builders": {
