@@ -6,6 +6,7 @@ interface Invoice {
   seller?: Seller
   status?: string
   totalizers?: Totalizers
+  jsonData?: any
 }
 interface Order {
   orderId: string
@@ -44,10 +45,12 @@ interface ModalConfirmData {
   invoiceMutation: any
   disabled: boolean
   integration?: string
+  settingsQuery?: DocumentNode
 }
 interface MessagesData {
   confirmation: any
   warning: any
+  noEmailWarning: any
 }
 interface SellerData {
   startDate: string
@@ -172,6 +175,7 @@ interface DetailProps {
   invoiceMutation: DocumentNode
   invoicesQuery: DocumentNode
   settingsQuery?: DocumentNode
+  payoutReportsQuery: DocumentNode
 }
 
 type SellerSettingsToken = Partial<TokenConfiguration>
@@ -227,13 +231,13 @@ interface SettingInfoType {
 }
 interface responseToken {
   getToken: {
-    autheticationToken: string,
+    autheticationToken: string
     enabled: boolean
     name: string
   }
 }
 interface TokenAuthProps {
-  activateToogle: Boolean
+  activateToogle: boolean
   sellerId: string
   editToken: DocumentNode
   createTokenMutation: DocumentNode

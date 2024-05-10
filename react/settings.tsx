@@ -1,27 +1,27 @@
+import type { DocumentNode } from 'graphql'
 import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
+import { useMutation, useQuery } from 'react-apollo'
+import { FormattedMessage } from 'react-intl'
+import { useRuntime } from 'vtex.render-runtime'
 import {
+  ActionMenu,
+  Alert,
+  Box,
+  Button,
+  IconOptionsDots,
   Layout,
   PageBlock,
   PageHeader,
-  ActionMenu,
-  IconOptionsDots,
-  Alert,
   EXPERIMENTAL_Select as Select,
-  Box,
-  Button,
-  Toggle,
-  EXPERIMENTAL_Table as Table,
   Spinner,
+  EXPERIMENTAL_Table as Table,
+  Toggle,
 } from 'vtex.styleguide'
-import { FormattedMessage } from 'react-intl'
-import { useQuery, useMutation } from 'react-apollo'
-import { useRuntime } from 'vtex.render-runtime'
-import { DocumentNode } from 'graphql'
 
+import { Filter, TokenAuth } from './components'
 import TableComponent from './components/Table'
 import PaginationComponent from './components/Table/pagination'
-import { Filter, TokenAuth } from './components'
 
 interface SettingsProps {
   getSellersQuery: DocumentNode
@@ -33,7 +33,15 @@ interface SettingsProps {
 }
 
 const Settings: FC<SettingsProps> = (props) => {
-  const { getSellersQuery, createSettingsMutation, getSettingsQuery, createTokenMutation, editToken, getTokenQuery, } = props
+  const {
+    getSellersQuery,
+    createSettingsMutation,
+    getSettingsQuery,
+    createTokenMutation,
+    editToken,
+    getTokenQuery,
+  } = props
+
   const { navigate, account } = useRuntime()
   const [sellersId, setSellersId] = useState('')
   const [optionsSelect, setOptionsSelect] = useState<SellerSelect[]>([])
@@ -43,6 +51,7 @@ const Settings: FC<SettingsProps> = (props) => {
   const [createSettings, { data: dataSettings }] = useMutation(
     createSettingsMutation
   )
+
   const [tokenSeller, setTokenSeller] = useState<any>({})
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(20)
@@ -51,6 +60,7 @@ const Settings: FC<SettingsProps> = (props) => {
   const [totalItems, setTotalItems] = useState(0)
   const [openAlert, setOpenAlert] = useState(false)
   const [integration, setIntegration] = useState(true)
+  const [toggleValue, setToggleValue] = useState(true)
   const { data: dataSellers } = useQuery(getSellersQuery, {
     ssr: false,
     pollInterval: 0,
@@ -123,6 +133,8 @@ const Settings: FC<SettingsProps> = (props) => {
         label: settings.getSettings.billingCycle,
       })
 
+      setToggleValue(settings.getSettings.showEmail)
+
       if (settings.getSettings.integration === 'external') setIntegration(false)
     }
   }, [settings])
@@ -166,7 +178,7 @@ const Settings: FC<SettingsProps> = (props) => {
         }}
         options={[
           {
-            label: <FormattedMessage id="admin/table-settings-detail" />,
+            label: 'Detail',
             onClick: () => {
               navigate({
                 to: `/admin/app/commission-report/settings/detail/${data.id}`,
@@ -202,7 +214,15 @@ const Settings: FC<SettingsProps> = (props) => {
     },
   ]
 
-  const handleCreateSettings = (integrationType = integration) => {
+  /* useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log('Show Email:', toggleValue)
+  }, [toggleValue]) */
+
+  const handleCreateSettings = ({
+    showStatus = toggleValue,
+    integrationType = integration,
+  } = {}) => {
     if (selectedValue) {
       const nowDate = new Date()
       let date = ''
@@ -254,6 +274,8 @@ const Settings: FC<SettingsProps> = (props) => {
             endDate: lastDateString,
             billingCycle: selectedValue.label,
             integration: integrationType ? 1 : 0,
+            showEmail: showStatus,
+            showStatus,
           },
         },
       })
@@ -319,103 +341,148 @@ const Settings: FC<SettingsProps> = (props) => {
         />
       }
     >
-      {loading ? <div className='flex justify-center'> <Spinner /> </div> : (<div className="mb2">
-        <Box>
-          {integration && (
-            <div className="mb7">
-              <h2>
-                <FormattedMessage id="admin/modal-settings.billingCycle" />
-              </h2>
-              <div className="mb4">
-                <Alert type="warning">
-                  <FormattedMessage id="admin/modal-settings.alert-warning" />
-                </Alert>
-                <div className="mb5 flex w-100 mt6">
-                  <div className="w-90">
-                    <Select
-                      menuPosition="fixed"
-                      options={DATE_CUT_OPTIONS}
-                      multi={false}
-                      value={selectedValue}
-                      onChange={(values: SelectObj) => {
-                        setSelectValue(values)
-                      }}
-                    />
+      {loading ? (
+        <div className="flex justify-center">
+          {' '}
+          <Spinner />{' '}
+        </div>
+      ) : (
+        <div className="mb2">
+          <Box>
+            {integration && (
+              <div className="mb7">
+                <h2>
+                  <FormattedMessage id="admin/modal-settings.billingCycle" />
+                </h2>
+                <div className="mb4">
+                  <Alert type="warning">
+                    <FormattedMessage id="admin/modal-settings.alert-warning" />
+                  </Alert>
+                  <div className="mb5 flex w-100 mt6">
+                    <div className="w-90">
+                      <Select
+                        menuPosition="fixed"
+                        options={DATE_CUT_OPTIONS}
+                        multi={false}
+                        value={selectedValue}
+                        onChange={(values: SelectObj) => {
+                          setSelectValue(values)
+                        }}
+                      />
+                    </div>
+                    <div className="w-10 pl2">
+                      <Button
+                        variation="primary"
+                        onClick={() => {
+                          handleCreateSettings()
+                        }}
+                      >
+                        <FormattedMessage id="admin/save-settings" />
+                      </Button>
+                    </div>
                   </div>
-                  <div className="w-10 pl2">
-                    <Button
-                      variation="primary"
-                      onClick={() => {
-                        handleCreateSettings()
-                      }}
-                    >
-                      <FormattedMessage id="admin/save-settings" />
-                    </Button>
+                  <div className="w-100">
+                    <p className="t-small mw9 c-muted-1">
+                      <FormattedMessage id="admin/modal-settings.billingCycle-helpText" />
+                    </p>
                   </div>
                 </div>
-                <div className="w-100">
-                  <p className="t-small mw9 c-muted-1">
-                    <FormattedMessage id="admin/modal-settings.billingCycle-helpText" />
+                {openAlert ? (
+                  <div className="mt7">
+                    <Alert type="success" onClose={() => setOpenAlert(false)}>
+                      Data was updated successfully
+                    </Alert>
+                  </div>
+                ) : (
+                  <div />
+                )}
+                <div className="mt7">
+                  <Table
+                    stickyHeader
+                    measures={[]}
+                    items={infoSettings}
+                    columns={[
+                      {
+                        id: 'idbilling',
+                        title: 'Billing Cycle',
+                      },
+                      {
+                        id: 'start',
+                        title: 'Start Date',
+                      },
+                      {
+                        id: 'end',
+                        title: 'End Date',
+                      },
+                    ]}
+                  />
+                </div>
+              </div>
+            )}
+            <div>
+              <h3 className="ma0">Type Integration</h3>
+              <div className="flex items-center">
+                <div className="w-20">
+                  <Toggle
+                    label={integration ? 'Internal' : 'External'}
+                    semantic
+                    checked={integration}
+                    onChange={() => {
+                      setIntegration(!integration)
+                      handleCreateSettings({ integrationType: !integration })
+                    }}
+                  />
+                </div>
+                <div className="w-80">
+                  <p>
+                    If you choose the <b>External</b> option, you will be in
+                    charge to do the commission calculations and invoices.
                   </p>
                 </div>
               </div>
-              {openAlert ? (
-                <div className="mt7">
-                  <Alert type="success" onClose={() => setOpenAlert(false)}>
-                    Data was updated successfully
-                  </Alert>
+            </div>
+          </Box>
+          <Box>
+            <div>
+              <h3 className="ma0">Optionals settings</h3>
+              <div className="flex items-center">
+                <div className="w-20">
+                  <Toggle
+                    label={
+                      toggleValue
+                        ? 'Do not use Email/Status'
+                        : 'Use Email/Status'
+                    }
+                    semantic
+                    checked={toggleValue}
+                    onChange={() => {
+                      setToggleValue(!toggleValue)
+                      handleCreateSettings({ showStatus: !toggleValue })
+                    }}
+                  />
                 </div>
-              ) : (
-                <div />
-              )}
-              <div className="mt7">
-                <Table
-                  stickyHeader
-                  measures={[]}
-                  items={infoSettings}
-                  columns={[
-                    {
-                      id: 'idbilling',
-                      title: 'Billing Cycle',
-                    },
-                    {
-                      id: 'start',
-                      title: 'Start Date',
-                    },
-                    {
-                      id: 'end',
-                      title: 'End Date',
-                    },
-                  ]}
-                />
+                <div className="w-80">
+                  <p>
+                    If you choose the <b>Use Email/Status</b> option, you will
+                    be able to know the status of the invoice and send the
+                    invoice by email.
+                  </p>
+                </div>
               </div>
             </div>
-          )}
-          <div>
-            <h3 className="ma0">Type Integration</h3>
-            <div className="flex items-center">
-              <div className="w-20">
-                <Toggle
-                  label={integration ? 'Internal' : 'External'}
-                  semantic
-                  checked={integration}
-                  onChange={() => {
-                    setIntegration(!integration)
-                    handleCreateSettings(!integration)
-                  }}
-                />
-              </div>
-              <div className="w-80">
-                <p>
-                  If you choose the <b>External</b> option, you will be in
-                  charge to do the commission calculations and invoices.
-                </p>
-              </div>
-            </div>
-          </div>
-        </Box>
-      </div>)}
-      {!integration && (<TokenAuth activateToogle={false} editToken={editToken} createTokenMutation={createTokenMutation} sellerId={account} tokenSeller={tokenSeller} />)}
+          </Box>
+        </div>
+      )}
+
+      {!integration && (
+        <TokenAuth
+          activateToogle={false}
+          editToken={editToken}
+          createTokenMutation={createTokenMutation}
+          sellerId={account}
+          tokenSeller={tokenSeller}
+        />
+      )}
       <p className="c-action-primary hover-c-action-primary fw5 ml2 mt6">
         <FormattedMessage id="admin/billing-cycle" />
       </p>

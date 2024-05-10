@@ -1,18 +1,19 @@
+import type { DocumentNode } from 'graphql'
 import type { FC } from 'react'
-import React, { useState, useEffect } from 'react'
-import {
-  Layout,
-  PageHeader,
-  Button,
-  EXPERIMENTAL_Select as Select,
-  Box,
-  EXPERIMENTAL_Table as Table,
-  Alert,
-} from 'vtex.styleguide'
+import React, { useEffect, useState } from 'react'
+import { useMutation, useQuery } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
 import { useRuntime } from 'vtex.render-runtime'
-import { useMutation, useQuery } from 'react-apollo'
-import { DocumentNode } from 'graphql'
+import {
+  Alert,
+  Box,
+  Button,
+  Layout,
+  PageHeader,
+  EXPERIMENTAL_Select as Select,
+  EXPERIMENTAL_Table as Table,
+} from 'vtex.styleguide'
+
 import { TokenAuth } from './components'
 
 const DATE_CUT_OPTIONS = [
@@ -71,7 +72,6 @@ const SettingsDetail: FC<SettingsDetailProps> = (props) => {
     },
   })
 
-
   const handleSaveBilling = () => {
     if (selectedValue) {
       const nowDate = new Date()
@@ -118,6 +118,7 @@ const SettingsDetail: FC<SettingsDetailProps> = (props) => {
         date = `${nowDate.getFullYear()}-${month}-${day}`
         lastDateString = `${nowDate.getFullYear()}-${month}-${finalDay}`
       }
+
       createSettings({
         variables: {
           settingsData: {
@@ -184,8 +185,14 @@ const SettingsDetail: FC<SettingsDetailProps> = (props) => {
         />
       }
     >
-      {(tokenSeller) && (
-        <TokenAuth activateToogle={false} editToken={editToken} createTokenMutation={createTokenMutation} sellerId={route.params.sellerId} tokenSeller={tokenSeller} />
+      {tokenSeller && (
+        <TokenAuth
+          activateToogle={false}
+          editToken={editToken}
+          createTokenMutation={createTokenMutation}
+          sellerId={route.params.sellerId}
+          tokenSeller={tokenSeller}
+        />
       )}
       {query?.integration === 'true' && (
         <div className="mt4">
@@ -204,10 +211,7 @@ const SettingsDetail: FC<SettingsDetailProps> = (props) => {
                 />
               </div>
               <div className="w-10 pl2">
-                <Button
-                  variation="primary"
-                  onClick={handleSaveBilling}
-                >
+                <Button variation="primary" onClick={handleSaveBilling}>
                   SAVE
                 </Button>
               </div>

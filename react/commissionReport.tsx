@@ -1,36 +1,37 @@
-import type { FC } from 'react'
 import type { DocumentNode } from 'graphql'
+import type { FC } from 'react'
 import React, { useEffect, useState } from 'react'
+import { useLazyQuery, useQuery } from 'react-apollo'
+import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
+import { useRuntime } from 'vtex.render-runtime'
 import {
-  Layout,
-  PageBlock,
+  ActionMenu,
+  ButtonWithIcon,
+  Divider,
+  IconArrowUp,
+  IconCog,
+  IconInfo,
+  IconOptionsDots,
   IconShoppingCart,
   IconUser,
-  IconArrowUp,
-  IconInfo,
-  PageHeader,
-  ActionMenu,
-  IconOptionsDots,
-  IconCog,
-  ButtonWithIcon,
+  Layout,
   Modal,
-  Divider,
+  PageBlock,
+  PageHeader,
   Toggle,
 } from 'vtex.styleguide'
-import { useQuery, useLazyQuery } from 'react-apollo'
-import { useRuntime } from 'vtex.render-runtime'
-import { FormattedMessage, defineMessages, useIntl } from 'react-intl'
+
 import { Filter, Totalizer } from './components'
 import TableComponent from './components/Table'
 import PaginationComponent from './components/Table/pagination'
-import { defaultStartString, defaultFinalString } from './constants'
+import { defaultFinalString, defaultStartString } from './constants'
 
 const dateDefaultPicker = {
   startDatePicker: new Date(`${defaultStartString}T00:00:00`),
   finalDatePicker: new Date(`${defaultFinalString}T00:00:00`),
   defaultStartDate: defaultStartString,
   defaultFinalDate: defaultFinalString,
-  today: false
+  today: false,
 }
 
 interface ReportProps {
@@ -40,11 +41,11 @@ interface ReportProps {
 }
 
 const idMessage: MessageType = defineMessages({
-  actions: { id: "admin/table-actions" },
-  totalComission: { id: "admin/table-total-commission" },
-  totalOrderValue: { id: "admin/table-total-amount" },
-  ordersCount: { id: "admin/table-total-order" },
-  name: { id: "admin/table-seller-name" }
+  actions: { id: 'admin/table-actions' },
+  totalComission: { id: 'admin/table-total-commission' },
+  totalOrderValue: { id: 'admin/table-total-amount' },
+  ordersCount: { id: 'admin/table-total-order' },
+  name: { id: 'admin/table-seller-name' },
 })
 
 const CommissionReport: FC<ReportProps> = (props) => {
@@ -99,23 +100,21 @@ const CommissionReport: FC<ReportProps> = (props) => {
     }
   )
 
-  const [
-    dashboard,
-    { data: dataDashboard, loading: loadingDataDashboard },
-  ] = useLazyQuery(searchSellersQuery, {
-    ssr: false,
-    pollInterval: 0,
-    variables: {
-      param: {
-        dateStart: startDate,
-        dateEnd: finalDate,
-        page,
-        pageSize,
-        sellersId,
-        sort: orderSort,
+  const [dashboard, { data: dataDashboard, loading: loadingDataDashboard }] =
+    useLazyQuery(searchSellersQuery, {
+      ssr: false,
+      pollInterval: 0,
+      variables: {
+        param: {
+          dateStart: startDate,
+          dateEnd: finalDate,
+          page,
+          pageSize,
+          sellersId,
+          sort: orderSort,
+        },
       },
-    },
-  })
+    })
 
   // id name ordersCount totalComission totalOrderValue
 
@@ -203,8 +202,9 @@ const CommissionReport: FC<ReportProps> = (props) => {
         setTotalOrder(0)
       }
 
-      if (!dataDashboard.searchSellersDashboard.sellers.length) setTotalItems(0)
-      else {
+      if (!dataDashboard.searchSellersDashboard.sellers.length) {
+        setTotalItems(0)
+      } else {
         const total = dataSellers ? dataSellers.getSellers.sellers.length : 0
 
         setTotalItems(total)
@@ -243,8 +243,8 @@ const CommissionReport: FC<ReportProps> = (props) => {
           valueSellersStats <= 0
             ? 0
             : totalItemsFilter > 0
-              ? totalItemsFilter
-              : totalItems
+            ? totalItemsFilter
+            : totalItems
 
         if (
           getStatistics.ordersCount === 0 &&
@@ -253,7 +253,7 @@ const CommissionReport: FC<ReportProps> = (props) => {
         ) {
           setSellersDashboard([])
           setTotalItems(0)
-          setOptionsSelect([])
+          // setOptionsSelect([])
         }
       }
 
@@ -278,8 +278,8 @@ const CommissionReport: FC<ReportProps> = (props) => {
           value: sellersId
             ? `$${totalAmount}`
             : `$${dataStats.searchStatisticsDashboard.statistics.totalOrderValue
-              .toFixed(2)
-              .toString()}`,
+                .toFixed(2)
+                .toString()}`,
           iconBackgroundColor: '#FFDCF8',
           icon: <IconArrowUp color="#F67CC7" size={14} />,
         },
@@ -288,8 +288,8 @@ const CommissionReport: FC<ReportProps> = (props) => {
           value: sellersId
             ? `$${totalCommission}`
             : `$${dataStats.searchStatisticsDashboard.statistics.totalComission
-              .toFixed(2)
-              .toString()}`,
+                .toFixed(2)
+                .toString()}`,
           iconBackgroundColor: '#FFF0EC',
           icon: <IconInfo color="#F7634A" size={14} />,
         },
@@ -305,6 +305,7 @@ const CommissionReport: FC<ReportProps> = (props) => {
     totalItems,
     totalItemsFilter,
     totalOrder,
+    setOptionsSelect,
   ])
 
   const formatDate = (valueDate: number) => {
@@ -409,41 +410,44 @@ const CommissionReport: FC<ReportProps> = (props) => {
     >
       <div className="w-100 flex justify-end">
         <ButtonWithIcon
-          icon={<IconCog color="#979899" />}
+          icon={<IconCog color="blue" />}
           variation="tertiary"
           onClick={() => setModalColumns(true)}
         />
       </div>
-      {modalColumns && <Modal
-        centered
-        isOpen={modalColumns}
-        onClose={() => setModalColumns(false)}
-      >
-        <p>Choose the columns to display</p>
-        <Divider orientation="horizontal" />
-        {schemaTable.forEach((itemColum) => {
-          const validateCheck = hideColumns.find(
-            (item) => item === itemColum.id
-          ) || false
-          const key = itemColum.id
-          columnModal.push(
-            <div className="mt3">
-              <Toggle
-                id={itemColum.id}
-                label={intl.formatMessage(idMessage[key])}
-                checked={validateCheck}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  hideShowColumns(e.target.id)
-                }}
-              />
+      {modalColumns && (
+        <Modal
+          centered
+          isOpen={modalColumns}
+          onClose={() => setModalColumns(false)}
+        >
+          <p>Choose the columns to display</p>
+          <Divider orientation="horizontal" />
+          {schemaTable.forEach((itemColum) => {
+            const validateCheck =
+              hideColumns.find((item) => item === itemColum.id) || false
+
+            const key = itemColum.id
+
+            columnModal.push(
               <div className="mt3">
-                <Divider orientation="horizontal" />
+                <Toggle
+                  id={itemColum.id}
+                  label={intl.formatMessage(idMessage[key])}
+                  checked={validateCheck}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    hideShowColumns(e.target.id)
+                  }}
+                />
+                <div className="mt3">
+                  <Divider orientation="horizontal" />
+                </div>
               </div>
-            </div>
-          )
-        })}
-        {columnModal}
-      </Modal>}
+            )
+          })}
+          {columnModal}
+        </Modal>
+      )}
       {startDate && finalDate && (
         <div className="mt2">
           <PageBlock>
@@ -452,7 +456,7 @@ const CommissionReport: FC<ReportProps> = (props) => {
                 defaultDate={dateDefaultPicker}
                 optionsSelect={optionsSelect}
                 setSellerId={setSellersId}
-                multiValue={true}
+                multiValue
                 filterDates={filterDates}
                 setTotalItems={setTotalItemsFilter}
               />

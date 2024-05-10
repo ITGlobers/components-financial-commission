@@ -235,34 +235,36 @@ const SellerOrders: FC<DetailProps> = ({
 
   return (
     <PageBlock>
-      {account ? null : (
-        <ModalConfirm
-          integration={integration}
-          invoiceMutation={invoiceMutation}
-          disabled={
-            !(
-              statusOrders === 'invoiced' &&
-              dataOrders?.orders.data.length &&
-              validRange
-            )
-          }
-          buttonMessage={
-            <FormattedMessage id="admin/form-settings.button-invoice" />
-          }
-          messages={{
-            warning: <FormattedMessage id="admin/modal-setting.warning" />,
-            confirmation: (
-              <FormattedMessage id="admin/modal-setting.confirmation" />
-            ),
-          }}
-          sellerData={{
-            startDate: startDate ?? '',
-            finalDate: finalDate ?? '',
-            sellerName: sellerName ?? '',
-            id: sellerId ?? '',
-          }}
-        />
-      )}
+      <ModalConfirm
+        settingsQuery={settingsQuery}
+        integration={integration}
+        invoiceMutation={invoiceMutation}
+        disabled={
+          !(
+            statusOrders === 'invoiced' &&
+            dataOrders?.orders.data.length &&
+            validRange
+          )
+        }
+        buttonMessage={
+          <FormattedMessage id="admin/form-settings.button-invoice" />
+        }
+        messages={{
+          warning: <FormattedMessage id="admin/modal-setting.warning" />,
+          noEmailWarning: (
+            <FormattedMessage id="admin/modal-setting.noEmailWarning" />
+          ),
+          confirmation: (
+            <FormattedMessage id="admin/modal-setting.confirmation" />
+          ),
+        }}
+        sellerData={{
+          startDate: startDate ?? '',
+          finalDate: finalDate ?? '',
+          sellerName: sellerName ?? '',
+          id: sellerId ?? '',
+        }}
+      />
       <div className="mt2">
         <TableComponent
           schemaTable={schemaTable}

@@ -6,14 +6,13 @@ import React, { useEffect, useState } from 'react'
 import { useQuery } from 'react-apollo'
 import { FormattedMessage } from 'react-intl'
 // import { useRuntime } from 'vtex.render-runtime'
-import { PageBlock /* Tag */ } from 'vtex.styleguide'
+import { PageBlock } from 'vtex.styleguide'
 
-// import { status } from '../../constants'
 import TableComponent from '../Table'
 import PaginationComponent from '../Table/pagination'
 
 interface DetailProps {
-  invoicesQuery: DocumentNode
+  payoutReportsQuery: DocumentNode
   account?: string
   sellerName?: string
   sellerId?: string
@@ -25,9 +24,10 @@ interface DetailProps {
   setDataTableInvoice: (data: Invoice[]) => void
 }
 
-const SellerInvoices: FC<DetailProps> = ({
+const PayoutReport: FC<DetailProps> = ({
   sellerName,
-  invoicesQuery,
+  sellerId,
+  payoutReportsQuery,
   startDate,
   finalDate,
   dataTableInvoice,
@@ -40,19 +40,19 @@ const SellerInvoices: FC<DetailProps> = ({
   const [itemFrom, setItemFrom] = useState(1)
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
-  // const [showStatus, setShowStatus] = useState(true)
+  // const [, setShowStatus] = useState(true)
 
   // const { data: settings } = useQuery(settingsQuery, {
   //   ssr: false,
   //   pollInterval: 0,
   // })
 
-  const { data: dataInvoices, loading } = useQuery(invoicesQuery, {
+  const { data: dataPayouts, loading } = useQuery(payoutReportsQuery, {
     ssr: false,
     pollInterval: 0,
     variables: {
-      sellerInvoiceParams: {
-        sellerName,
+      params: {
+        sellerId,
         dates: {
           startDate,
           endDate: finalDate,
@@ -76,61 +76,40 @@ const SellerInvoices: FC<DetailProps> = ({
   //     setDataTableInvoice([])
   //     setTotalItems(0)
   //   }
-  // }, [query, sellerName])
+  // }, [query, sellerName, setDataTableInvoice])
 
   useEffect(() => {
-    if (dataInvoices) {
-      console.info('cargo!')
-      setDataTableInvoice(dataInvoices.invoicesBySeller.data)
-      setTotalItems(dataInvoices.invoicesBySeller.pagination.total)
+    if (dataPayouts) {
+      setDataTableInvoice(dataPayouts.searchPayoutReport.data)
+      setTotalItems(dataPayouts.searchPayoutReport.pagination.total)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataInvoices, sellerName])
+  }, [dataPayouts, sellerName])
 
   const schemaTableInvoice = [
     {
-      id: 'columnId',
-      title: <FormattedMessage id="admin/table-seller-invoice" />,
-      // eslint-disable-next-line react/display-name
+      id: 'id',
+      title: <FormattedMessage id="admin/table-payout-id" />,
       cellRenderer: (props: any) => {
         return (
           // eslint-disable-next-line jsx-a11y/anchor-is-valid
           <a
-            href={`/admin/app/commission-report/invoice/${props.data.href}`}
+            href={`/admin/app/commission-report/payout/${props.data}`}
             style={{ color: '#0C389F' }}
             target="_self"
             rel="noreferrer"
           >
-            {props.data.idVisible}
+            {props.data}
           </a>
         )
       },
     },
     {
-      id: 'invoiceCreatedDate',
-      title: <FormattedMessage id="admin/table-seller-created" />,
-    } /*
+      id: 'reportCreatedDate',
+      title: <FormattedMessage id="admin/table-payout-reportCreatedDate" />,
+    },
     {
-      id: 'status',
-      title: <FormattedMessage id="admin/table-seller-status" />,
-      cellRenderer: (props: any) => {
-        // eslint-disable-next-line array-callback-return
-        const getColor = Object.keys(status).find(
-          (itemStatus) => itemStatus === props.data
-        )
-
-        const bgColor = getColor ? status[getColor].bgColor : ''
-        const fontcolor = getColor ? status[getColor].fontColor : ''
-
-        return (
-          <Tag bgColor={bgColor} color={fontcolor}>
-            {props.data}
-          </Tag>
-        )
-      },
-    }, */,
-    {
-      id: 'downloadFiles',
+      id: 'id',
       title: <FormattedMessage id="admin/table-seller-download" />,
       // eslint-disable-next-line react/display-name
       cellRenderer: (props: any) => {
@@ -138,40 +117,27 @@ const SellerInvoices: FC<DetailProps> = ({
           // eslint-disable-next-line jsx-a11y/anchor-is-valid
           <>
             <a
-              href={`/_v/private/financial-commission/external/invoice/file/${props.data.id}/type/xls`}
+              href={`/_v/private/financial-commission/external/payout/file/${props.data}/type/xls`}
               style={{ color: '#0C389F' }}
               target="_self"
               rel="noreferrer"
             >
-              {/* {props.data.idVisible} */}
               XLS
             </a>
             <span> | </span>
             <a
-              href={`/_v/private/financial-commission/external/invoice/file/${props.data.id}/type/csv`}
+              href={`/_v/private/financial-commission/external/payout/file/${props.data}/type/csv`}
               style={{ color: '#0C389F' }}
               target="_self"
               rel="noreferrer"
             >
               CSV
             </a>
-            {/* <span> | </span>
-            <a
-              href={`/_v/private/financial-commission/external/invoice/file/${props.data.id}/type/pdf`}
-              style={{ color: '#0C389F' }}
-              target="_self"
-              rel="noreferrer"
-            >
-              // {props.data.idVisible}
-              PDF
-            </a> */}
           </>
         )
       },
     },
   ]
-
-  // !showStatus && schemaTableInvoice.splice(2, 1)
 
   const changeRows = (row: number) => {
     setPageSize(row)
@@ -225,4 +191,4 @@ const SellerInvoices: FC<DetailProps> = ({
   )
 }
 
-export default SellerInvoices
+export default PayoutReport

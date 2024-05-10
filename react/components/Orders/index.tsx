@@ -7,7 +7,7 @@ import {
   ButtonWithIcon,
   IconVisibilityOff,
   PageBlock,
-  Tag,
+  /*Tag,*/
 } from 'vtex.styleguide'
 
 import { status } from '../../constants'
@@ -30,6 +30,7 @@ interface DetailProps {
   dataTableOrders: TableOrdersType[]
   setDataTableOrders: (data: TableOrdersType[]) => void
   validRange: boolean
+  settingsQuery?: DocumentNode
 }
 
 const Orders: FC<DetailProps> = ({
@@ -47,6 +48,7 @@ const Orders: FC<DetailProps> = ({
   dataTableOrders,
   setDataTableOrders,
   validRange,
+  settingsQuery,
 }) => {
   const [page, setPage] = useState(1)
   const [pageSize, setPageSize] = useState(20)
@@ -54,23 +56,21 @@ const Orders: FC<DetailProps> = ({
   const [itemTo, setItemTo] = useState(20)
   const [totalItems, setTotalItems] = useState(0)
 
-  const [
-    getDataOrders,
-    { data: dataOrders, loading: loadingDataOrders },
-  ] = useLazyQuery(ordersQuery, {
-    ssr: false,
-    pollInterval: 0,
-    variables: {
-      searchOrdersParams: {
-        dateStart: startDate,
-        dateEnd: finalDate,
-        sellerName,
-        page,
-        perpage: pageSize,
-        status: statusOrders,
+  const [getDataOrders, { data: dataOrders, loading: loadingDataOrders }] =
+    useLazyQuery(ordersQuery, {
+      ssr: false,
+      pollInterval: 0,
+      variables: {
+        searchOrdersParams: {
+          dateStart: startDate,
+          dateEnd: finalDate,
+          sellerName,
+          page,
+          perpage: pageSize,
+          status: statusOrders,
+        },
       },
-    },
-  })
+    })
 
   const IDCell = (props: CellRendererProps) => {
     return (
@@ -109,13 +109,13 @@ const Orders: FC<DetailProps> = ({
     )
   }
 
-  const StatusCell = (props: any) => {
+  /*const StatusCell = (props: any) => {
     return (
       <Tag bgColor={props.data.bgColor} color={props.data.fontColor}>
         {props.data.status}
       </Tag>
     )
-  }
+  }*/
 
   const schemaTable = [
     {
@@ -141,12 +141,12 @@ const Orders: FC<DetailProps> = ({
       id: 'rate',
       title: <FormattedMessage id="admin/table-rate-order" />,
       cellRenderer: RateCell,
-    },
+    },/*
     {
       id: 'status',
       title: <FormattedMessage id="admin/table-seller-status" />,
       cellRenderer: StatusCell,
-    },
+    },*/
   ]
 
   const changeRows = (row: number) => {
@@ -213,33 +213,35 @@ const Orders: FC<DetailProps> = ({
 
   return (
     <PageBlock>
-      {account ? null : (
-        <ModalConfirm
-          invoiceMutation={invoiceMutation}
-          disabled={
-            !(
-              statusOrders === 'invoiced' &&
-              dataOrders?.orders.data.length &&
-              validRange
-            )
-          }
-          buttonMessage={
-            <FormattedMessage id="admin/form-settings.button-invoice" />
-          }
-          messages={{
-            warning: <FormattedMessage id="admin/modal-setting.warning" />,
-            confirmation: (
-              <FormattedMessage id="admin/modal-setting.confirmation" />
-            ),
-          }}
-          sellerData={{
-            startDate: startDate ?? '',
-            finalDate: finalDate ?? '',
-            sellerName: sellerName ?? '',
-            id: sellerId ?? '',
-          }}
-        />
-      )}
+      <ModalConfirm
+        settingsQuery={settingsQuery}
+        invoiceMutation={invoiceMutation}
+        disabled={
+          !(
+            statusOrders === 'invoiced' &&
+            dataOrders?.orders.data.length &&
+            validRange
+          )
+        }
+        buttonMessage={
+          <FormattedMessage id="admin/form-settings.button-invoice" />
+        }
+        messages={{
+          warning: <FormattedMessage id="admin/modal-setting.warning" />,
+          noEmailWarning: (
+            <FormattedMessage id="admin/modal-setting.noEmailWarning" />
+          ),
+          confirmation: (
+            <FormattedMessage id="admin/modal-setting.confirmation" />
+          ),
+        }}
+        sellerData={{
+          startDate: startDate ?? '',
+          finalDate: finalDate ?? '',
+          sellerName: sellerName ?? '',
+          id: sellerId ?? '',
+        }}
+      />
       <div className="mt2">
         <TableComponent
           schemaTable={schemaTable}

@@ -7,10 +7,18 @@ import { Alert, Button, Input, ModalDialog, Spinner } from 'vtex.styleguide'
 import styles from '../../styles.css'
 
 const ModalConfirm: FC<ModalConfirmData> = (props) => {
+  // const { settingsQuery } = props
+
   const [email, setEmail] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [validEmail, setValidEmail] = useState(true)
   const [empty, setEmpty] = useState(true)
+  // const [showEmail, setShowEmail] = useState(true)
+
+  // const { data: settings } = useQuery(settingsQuery, {
+  //   ssr: false,
+  //   pollInterval: 0,
+  // })
 
   const EMAIL_PATTERN = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
 
@@ -69,6 +77,12 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
     })
   }
 
+  // useEffect(() => {
+  //   if (settings) {
+  //     setShowEmail(settings.getSettings.showEmail)
+  //   }
+  // }, [settings])
+
   if (loading) {
     return (
       <div className="mb5 flex justify-center">
@@ -98,8 +112,9 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
       <ModalDialog
         centered
         confirmation={{
-          disabled: true,
+          // disabled: showEmail ? empty || !validEmail : false,
           onClick: () => {
+            // if (showEmail && (empty || !validEmail)) {
             if (empty || !validEmail) {
               return
             }
@@ -122,6 +137,7 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(!isModalOpen)}
       >
+        {/* {showEmail ? ( */}
         <div>
           <p>{props.messages.warning}</p>
           <p>{props.messages.confirmation}</p>
@@ -138,6 +154,12 @@ const ModalConfirm: FC<ModalConfirmData> = (props) => {
             />
           </div>
         </div>
+        {/* ) : (
+          <div>
+            <p>{props.messages.noEmailWarning}</p>
+            <p>{props.messages.confirmation}</p>
+          </div>
+        )} */}
       </ModalDialog>
 
       {props.integration !== 'internal' ? null : (

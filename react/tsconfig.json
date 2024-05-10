@@ -1,6 +1,7 @@
 {
   "extends": "@vtex/tsconfig",
   "compilerOptions": {
+    "resolveJsonModule": true,
     "noEmitOnError": false,
     "lib": [
       "dom"

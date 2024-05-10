@@ -57,11 +57,7 @@ export const defaultFinalString = `${defaultfinal.getFullYear()}-${formatDate(
 if (defaultDate.getDate() <= 1) {
   defaultStart = defaultfinal
 } else {
-  defaultStart = new Date(
-    defaultDate.getFullYear(),
-    defaultDate.getMonth(),
-    1
-  )
+  defaultStart = new Date(defaultDate.getFullYear(), defaultDate.getMonth(), 1)
 }
 
 export const defaultStartString = `${defaultStart.getFullYear()}-${formatDate(
